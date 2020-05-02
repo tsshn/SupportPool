@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "tickets")
@@ -22,6 +23,9 @@ public class TicketEntity {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "body_text")
+    private String bodyText;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
@@ -49,5 +53,8 @@ public class TicketEntity {
 
     @Column(name = "firm")
     private String firm;
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+    private Set<CommentEntity> comments;
 
 }
