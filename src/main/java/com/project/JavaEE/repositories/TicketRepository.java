@@ -29,7 +29,7 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Integer> {
     List<TicketEntity> findByState(@Param("state") State state);
 
     @Query("SELECT t FROM TicketEntity t WHERE t.caseType = :caseType")
-    List<TicketEntity> findByCase(@Param("casetype") Case caseType);
+    List<TicketEntity> findByCase(@Param("caseType") Case caseType);
 
     @Query("SELECT t FROM TicketEntity t WHERE t.firm LIKE :firm")
     List<TicketEntity> findByFirm(@Param("firm") String firm);
