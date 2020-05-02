@@ -42,7 +42,7 @@ public class TicketEntity {
     private Priority priority;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "case", nullable = false)
+    @Column(name = "case_type", nullable = false)
     private Case caseType;
 
     @Column(name = "creation_date")

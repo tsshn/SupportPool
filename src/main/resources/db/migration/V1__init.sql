@@ -1,21 +1,45 @@
-create table if not exists tickets
-(
-    id INT auto_increment primary key
-);
 
 create table if not exists users
 (
     id       int primary key auto_increment,
     login    varchar(50) not null,
-    password varchar(50) not null,
-    unique uniq_login (login)
+    password varchar(50) not null
+);
+
+create table if not exists tickets
+(
+    id                  int auto_increment primary key,
+    title               varchar(100) not null,
+    responsible_user int not null,
+    foreign key (responsible_user) references users(id),
+    requester_user int not null,
+    foreign key (requester_user) references users(id),
+    body_text varchar(500) not null,
+    state varchar(15) not null,
+    priority varchar(15) not null,
+    case_type varchar(15) not null,
+    creation_date date not null,
+    eta_date date null,
+    ns_date date null,
+    ns_note varchar(50) null,
+    firm varchar(50) not null
+);
+
+create table if not exists comments
+(
+    id int primary key auto_increment,
+    ticket int not null,
+    foreign key (ticket) references tickets(id),
+    author int not null,
+    foreign key (author) references users(id),
+    body_text varchar(300) not null,
+    creation_date date not null
 );
 
 create table if not exists permissions
 (
     id         int primary key auto_increment,
-    permission varchar(50) not null,
-    unique uniq_permission (permission)
+    permission varchar(50) not null
 );
 
 create table if not exists user_to_permissions
