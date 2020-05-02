@@ -6,6 +6,8 @@ import com.project.JavaEE.entities.PermissionEntity;
 import com.project.JavaEE.entities.UserEntity;
 import com.project.JavaEE.entities.UserDetails;
 import com.project.JavaEE.services.UserService;
+import com.project.JavaEE.entities.type.Permission;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,17 +22,18 @@ import java.util.Set;
 @Controller
 @PreAuthorize("isFullyAuthenticated()")
 public class UserController {
+
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PreAuthorize(value = "!isFullyAuthenticated()")
+    @PreAuthorize(value = "'VIEW_ADMIN'") // <-- NOT SURE ABOUT THAT PART
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userModel) {
+    public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userModel, Permission permission) {
         List<PermissionEntity> permissions = new ArrayList<>();
-        permissions.add(new PermissionEntity(1, com.project.JavaEE.entities.type.Permission.VIEW_CATALOG));
+        permissions.add(new PermissionEntity(1, permission));
         UserEntity user = userService.create(userModel.getLogin(), userModel.getPassword(), permissions);
         return ResponseEntity.ok(new UserDto(user.getId(), user.getPassword(), user.getLogin()));
     }
@@ -41,23 +44,24 @@ public class UserController {
         return ResponseEntity.ok(userDetails);
     }
 
-    @GetMapping(value = "/liked")
-    public ResponseEntity<Set<TicketEntity>> getLiked() {
+    @GetMapping(value = "/connected/{type}")
+    public ResponseEntity<Set<TicketEntity>> getTickets(@PathVariable String type) {
         final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok(userService.getLiked(userDetails.getUsername()));
+        return ResponseEntity.ok(userService.getTickets(userDetails.getUsername(), type));
     }
 
-    @RequestMapping(value = "/liked/{bookId}", method = RequestMethod.POST)
-    public ResponseEntity<Set<TicketEntity>> addLiked(@PathVariable String bookId) {
+    @RequestMapping(value = "/connected/{type}/{ticketId}", method = RequestMethod.POST)
+    public ResponseEntity<Set<TicketEntity>> addTicket(@PathVariable String ticketId, @PathVariable String type) {
         final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserEntity userEntity = userService.addLiked(userDetails.getUsername(), Integer.parseInt(bookId));
-        return ResponseEntity.ok(userEntity.getLiked());
+        UserEntity userEntity = userService.addTicket(userDetails.getUsername(), type, Integer.parseInt(ticketId));
+        return ResponseEntity.ok(userEntity.getResponsibleFor());
     }
 
-    @RequestMapping(value = "/liked/{bookId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Set<TicketEntity>> removeLiked(@PathVariable String bookId) {
+    @RequestMapping(value = "/connected/{type}/{ticketId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Set<TicketEntity>> removeTicket(@PathVariable String ticketId, @PathVariable String type) {
         final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserEntity userEntity = userService.removeLiked(userDetails.getUsername(), Integer.parseInt(bookId));
-        return ResponseEntity.ok(userEntity.getLiked());
+        UserEntity userEntity = userService.removeTicket(userDetails.getUsername(), type, Integer.parseInt(ticketId));
+        return ResponseEntity.ok(userEntity.getResponsibleFor());
     }
+
 }

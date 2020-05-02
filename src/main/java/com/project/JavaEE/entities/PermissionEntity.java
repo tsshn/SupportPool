@@ -1,9 +1,10 @@
 package com.project.JavaEE.entities;
 
 import com.project.JavaEE.entities.type.Permission;
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;

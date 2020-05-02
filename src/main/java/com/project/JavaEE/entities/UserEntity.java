@@ -1,8 +1,8 @@
 package com.project.JavaEE.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,8 +12,8 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserEntity {
     @Id
@@ -35,9 +35,22 @@ public class UserEntity {
     )
     private List<PermissionEntity> permissions;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_to_liked_book",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "BOOK_ID"))
-    private Set<TicketEntity> liked;
+    @OneToMany(mappedBy="UserEntity")
+    private Set<TicketEntity> responsibleFor;
+
+    @OneToMany(mappedBy="UserEntity")
+    private Set<TicketEntity> requested;
+
+    /*@OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "responsible_user_to_tickets",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    private Set<TicketEntity> responsibleFor;*/
+
+    /*@OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "requester_user_to_tickets",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    private Set<TicketEntity> requested;*/
+
 }
