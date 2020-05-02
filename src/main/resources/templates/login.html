@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../styles.css" rel="stylesheet"/>
+    <link href="../static/styles.css" rel="stylesheet"/>
+
+    <title>Login</title>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <div class="sidebar-member workspace-label" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
+                class="sidebar-member-icon">📚</span>Workspace
+        </div>
+        <div class="sidebar-member" th:if="${#authorization.expression('isFullyAuthenticated()')}"><a href="#"><span
+                class="sidebar-member-icon">🚨</span><span
+                class="sidebar-member-label">Support Pool</span></a></div>
+        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a
+                href="#"><span class="sidebar-member-icon">🤝</span><span
+                class="sidebar-member-label">Team</span></a></div>
+        <div class="sidebar-member chosen"><a href="#"><span class="sidebar-member-icon">🔑</span><span
+                class="sidebar-member-label">Login</span></a></div>
+        <div class="sidebar-user-label">
+            <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
+                    class="sidebar-member-label">Hi, Stranger</span></div>
+        </div>
+    </div>
+
+    <div class="frame">
+
+        <div class="sub-container">
+
+            <div class="sub-container-title">🔑 Login</div>
+
+            <div class="login-container">
+                <form id="login">
+                    <div th:if="${!#authorization.expression('isFullyAuthenticated()')}">
+                        <input name="login" id="loginField" placeholder="Login">
+                        <input name="password" id="passwordField" type="password" placeholder="Password">
+                        <button type="submit" class="centred-button">Log in</button>
+                    </div>
+                    <button th:if="${#authorization.expression('isFullyAuthenticated()')}" id="logout"
+                            class="centred-button">Logout
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

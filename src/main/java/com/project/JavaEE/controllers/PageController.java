@@ -26,7 +26,7 @@ public class PageController {
 
     @GetMapping("/library")
     public String bookCatalog() {
-        return "library";
+        return "pool";
     }
 
     @GetMapping("/login")

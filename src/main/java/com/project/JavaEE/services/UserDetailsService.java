@@ -34,7 +34,8 @@ public class UserDetailsService implements org.springframework.security.core.use
                 user.getPassword(),
                 mapAuthorities(user.getPermissions()),
                 user.getResponsibleFor(),
-                user.getRequested()
+                user.getRequested(),
+                user.getComments()
         );
     }
 
