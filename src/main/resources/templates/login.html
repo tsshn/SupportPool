@@ -77,9 +77,6 @@
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('Content-Type', 'application/json')
                 },
-                error: function (error) {
-                  console.log(error);
-                },
                 success: function () {
                     window.location.href = window.location.origin + "/login";
                 }
