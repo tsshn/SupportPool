@@ -41,13 +41,16 @@ public class UserEntity {
     @OneToMany(mappedBy="UserEntity")
     private Set<TicketEntity> requested;
 
+    @OneToMany(mappedBy="UserEntity")
+    private Set<CommentEntity> comments;
+
     /*@OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "responsible_user_to_tickets",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
-    private Set<TicketEntity> responsibleFor;*/
+    private Set<TicketEntity> responsibleFor;
 
-    /*@OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "requester_user_to_tickets",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
