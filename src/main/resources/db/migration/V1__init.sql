@@ -52,7 +52,7 @@ values ('VIEW_ADMIN'),
        ('VIEW_SUPPORT'),
        ('VIEW_SALES');
 
-# FILLING TABLES WITH SAMPLE DATA BELOW
+-- FILLING TABLES WITH SAMPLE DATA BELOW
 
 insert into user_to_permissions (user_id, permission_id)
 values ((

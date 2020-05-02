@@ -5,7 +5,6 @@ import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,10 +18,10 @@ public class TicketEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
     @ManyToOne
@@ -31,19 +30,19 @@ public class TicketEntity {
     @ManyToOne
     private UserEntity requester_user;
 
-    @Column(name = "body_text")
+    @Column(name = "body_text", nullable = false)
     private String bodyText;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state")
+    @Column(name = "state", nullable = false)
     private State state;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "priority")
+    @Column(name = "priority", nullable = false)
     private Priority priority;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "case")
+    @Column(name = "case", nullable = false)
     private Case casetype;
 
     @Column(name = "creation_date")
@@ -58,7 +57,7 @@ public class TicketEntity {
     @Column(name = "ns_note")
     private String nextstepNote;
 
-    @Column(name = "firm")
+    @Column(name = "firm", nullable = false)
     private String firm;
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)

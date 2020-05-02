@@ -12,33 +12,38 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@PreAuthorize("isFullyAuthenticated()")
 public class TicketController {
-    private final TicketService bookService;
 
-    public TicketController(TicketService bookService) {
-        this.bookService = bookService;
+    private final TicketService ticketService;
+
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
     }
 
     @ResponseBody
     @GetMapping(value = "/get")
     public List<TicketEntity> getAll() {
-        return bookService.getAll();
+        return ticketService.getAll();
     }
 
-    @PreAuthorize("hasAuthority('VIEW_ADMIN')")
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<TicketDto> bookFormControllerPost(@Valid @RequestBody final TicketDto book) {
-        TicketEntity bookEntity = bookService.add(book.getTitle(), book.getIsbn(), book.getAuthor());
-        return ResponseEntity.ok(new TicketDto(bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getIsbn()));
+    @GetMapping(value = "/get/{ticketId}")
+    public ResponseEntity<TicketEntity> getById(@PathVariable("ticketId") Integer ticketId) {
+        return ResponseEntity.ok(ticketService.getById(ticketId));
     }
 
-    @RequestMapping(value = "/get/{bookId}")
-    public ResponseEntity<TicketEntity> getById(@PathVariable("bookId") Integer bookId) {
-        return ResponseEntity.ok(bookService.getById(bookId));
+    @PreAuthorize("hasAuthority('VIEW_SALES')")
+    @PostMapping(value = "/create")
+    public void create(@Valid @RequestBody final TicketDto ticketModel) {
+        ticketService.createTicket(ticketModel.getTitle(), ticketModel.getBodyText(),
+                                ticketModel.getState(), ticketModel.getPriority(),
+                                ticketModel.getCasetype(), ticketModel.getCreationDate(),
+                                ticketModel.getEtaDate(), ticketModel.getNextstepDate(),
+                                ticketModel.getNextstepNote(), ticketModel.getFirm());
     }
 
-    @RequestMapping(value = "/filter", method = {RequestMethod.POST})
+    @GetMapping(value = "/filter")
     public ResponseEntity<List<TicketEntity>> filter(@RequestBody final FilterDto filterDto) {
-        return ResponseEntity.ok(bookService.filter(filterDto.getProperty(), filterDto.getInput()));
+        return ResponseEntity.ok(ticketService.filter(filterDto.getProperty(), filterDto.getInput()));
     }
 }

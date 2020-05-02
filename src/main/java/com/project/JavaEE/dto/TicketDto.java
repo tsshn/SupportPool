@@ -19,6 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class TicketDto {
 
+    private Integer id;
+
     @NotEmpty(message = "Title cannot be empty")
     private String title;
 
