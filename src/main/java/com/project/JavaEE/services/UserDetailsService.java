@@ -1,7 +1,7 @@
 package com.project.JavaEE.services;
 
-import com.project.JavaEE.entities.Permission;
-import com.project.JavaEE.entities.User;
+import com.project.JavaEE.entities.PermissionEntity;
+import com.project.JavaEE.entities.UserEntity;
 import com.project.JavaEE.entities.UserDetails;
 import com.project.JavaEE.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private final UserRepository userRepository;
 
-    private static List<GrantedAuthority> mapAuthorities(final List<Permission> permissions) {
+    private static List<GrantedAuthority> mapAuthorities(final List<PermissionEntity> permissions) {
         return permissions.stream()
-                .map(Permission::getPermission)
+                .map(PermissionEntity::getPermission)
                 .map(Enum::name)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toUnmodifiableList());
@@ -26,7 +26,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final User user = userRepository.get(username)
+        final UserEntity user = userRepository.get(username)
                 .orElseThrow(() -> new UsernameNotFoundException("No user with login: " + username));
         return new UserDetails(
                 username,

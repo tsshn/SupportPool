@@ -11,13 +11,13 @@ import java.util.Set;
 @Getter
 @ToString(callSuper = true)
 public class UserDetails extends User {
-    private final Set<Ticket> liked;
+    private final Set<TicketEntity> liked;
 
     public UserDetails(
             final String username,
             final String password,
             final List<? extends GrantedAuthority> authorities,
-            final Set<Ticket> liked) {
+            final Set<TicketEntity> liked) {
         super(username, password, authorities);
         this.liked = liked;
     }

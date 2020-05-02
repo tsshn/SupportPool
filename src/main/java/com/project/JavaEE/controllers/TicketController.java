@@ -2,7 +2,7 @@ package com.project.JavaEE.controllers;
 
 import com.project.JavaEE.dto.TicketDto;
 import com.project.JavaEE.dto.FilterDto;
-import com.project.JavaEE.entities.Ticket;
+import com.project.JavaEE.entities.TicketEntity;
 import com.project.JavaEE.services.TicketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,24 +21,24 @@ public class TicketController {
 
     @ResponseBody
     @GetMapping(value = "/get")
-    public List<Ticket> getAll() {
+    public List<TicketEntity> getAll() {
         return bookService.getAll();
     }
 
     @PreAuthorize("hasAuthority('VIEW_ADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<TicketDto> bookFormControllerPost(@Valid @RequestBody final TicketDto book) {
-        Ticket bookEntity = bookService.add(book.getTitle(), book.getIsbn(), book.getAuthor());
+        TicketEntity bookEntity = bookService.add(book.getTitle(), book.getIsbn(), book.getAuthor());
         return ResponseEntity.ok(new TicketDto(bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getIsbn()));
     }
 
     @RequestMapping(value = "/get/{bookId}")
-    public ResponseEntity<Ticket> getById(@PathVariable("bookId") Integer bookId) {
+    public ResponseEntity<TicketEntity> getById(@PathVariable("bookId") Integer bookId) {
         return ResponseEntity.ok(bookService.getById(bookId));
     }
 
     @RequestMapping(value = "/filter", method = {RequestMethod.POST})
-    public ResponseEntity<List<Ticket>> filter(@RequestBody final FilterDto filterDto) {
+    public ResponseEntity<List<TicketEntity>> filter(@RequestBody final FilterDto filterDto) {
         return ResponseEntity.ok(bookService.filter(filterDto.getProperty(), filterDto.getInput()));
     }
 }

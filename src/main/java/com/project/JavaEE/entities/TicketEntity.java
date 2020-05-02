@@ -1,15 +1,17 @@
 package com.project.JavaEE.entities;
 
+import com.project.JavaEE.entities.type.Priority;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "library")
+@Table(name = "tickets")
 @RequiredArgsConstructor
 @Data
-public class Ticket {
+public class TicketEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,6 +19,10 @@ public class Ticket {
 
     @Column(name = "title")
     private String title;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "priority")
+    private Priority priority;
 
     @Column(name = "isbn")
     private String isbn;

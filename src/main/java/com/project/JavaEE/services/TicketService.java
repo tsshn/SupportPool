@@ -1,6 +1,6 @@
 package com.project.JavaEE.services;
 
-import com.project.JavaEE.entities.Ticket;
+import com.project.JavaEE.entities.TicketEntity;
 import com.project.JavaEE.repositories.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ public class TicketService {
     private final TicketRepository bookRepository;
 
     @Transactional
-    public Ticket add(String title, String isbn, String author) {
-        Ticket book = new Ticket();
+    public TicketEntity add(String title, String isbn, String author) {
+        TicketEntity book = new TicketEntity();
         book.setAuthor(author);
         book.setTitle(title);
         book.setIsbn(isbn);
@@ -25,33 +25,33 @@ public class TicketService {
     }
 
     @Transactional
-    public Ticket getById(int id) {
-        Optional<Ticket> book = bookRepository.findById(id);
+    public TicketEntity getById(int id) {
+        Optional<TicketEntity> book = bookRepository.findById(id);
         return book.orElse(null);
     }
 
     @Transactional
-    public List<Ticket> getAll() {
+    public List<TicketEntity> getAll() {
         return bookRepository.findAll();
     }
 
     @Transactional
-    public List<Ticket> getByTitle(String title) {
+    public List<TicketEntity> getByTitle(String title) {
         return bookRepository.getByTitle('%' + title + '%');
     }
 
     @Transactional
-    public List<Ticket> getByAuthor(String author) {
+    public List<TicketEntity> getByAuthor(String author) {
         return bookRepository.getByAuthor('%' + author + '%');
     }
 
     @Transactional
-    public List<Ticket> getByIsbn(String isbn) {
+    public List<TicketEntity> getByIsbn(String isbn) {
         return bookRepository.getByIsbn('%' + isbn + '%');
     }
 
     @Transactional
-    public List<Ticket> filter(String criteria, String searchWord) {
+    public List<TicketEntity> filter(String criteria, String searchWord) {
         System.out.println(getByTitle(searchWord));
         return switch (criteria) {
             case "title" -> getByTitle(searchWord);
