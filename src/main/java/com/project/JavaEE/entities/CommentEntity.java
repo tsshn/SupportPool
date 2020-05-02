@@ -1,4 +1,4 @@
 package com.project.JavaEE.entities;
 
-public class Comment {
+public class CommentEntity {
 }
