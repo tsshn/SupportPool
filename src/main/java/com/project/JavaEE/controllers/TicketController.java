@@ -22,14 +22,24 @@ public class TicketController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/get")
+    @GetMapping(value = "/ticket")
     public List<TicketEntity> getAll() {
         return ticketService.getAll();
     }
 
-    @GetMapping(value = "/get/{ticketId}")
+    @GetMapping(value = "/ticket/{ticketId}")
     public ResponseEntity<TicketEntity> getById(@PathVariable("ticketId") Integer ticketId) {
         return ResponseEntity.ok(ticketService.getById(ticketId));
+    }
+
+    @PostMapping(value = "/update-ticket/{ticketId}")
+    public void update(@PathVariable("ticketId") Integer ticketId,
+                                               @Valid @RequestBody final TicketDto ticketModel) {
+        ticketService.updateTicket(ticketId, ticketModel.getTitle(), ticketModel.getBodyText(),
+                                ticketModel.getState(), ticketModel.getPriority(),
+                                ticketModel.getCaseType(), ticketModel.getCreationDate(),
+                                ticketModel.getEtaDate(), ticketModel.getNextStepDate(),
+                                ticketModel.getNextStepNote(), ticketModel.getFirm());
     }
 
     @PreAuthorize("hasAuthority('VIEW_SALES')")
@@ -37,9 +47,9 @@ public class TicketController {
     public void create(@Valid @RequestBody final TicketDto ticketModel) {
         ticketService.createTicket(ticketModel.getTitle(), ticketModel.getBodyText(),
                                 ticketModel.getState(), ticketModel.getPriority(),
-                                ticketModel.getCasetype(), ticketModel.getCreationDate(),
-                                ticketModel.getEtaDate(), ticketModel.getNextstepDate(),
-                                ticketModel.getNextstepNote(), ticketModel.getFirm());
+                                ticketModel.getCaseType(), ticketModel.getCreationDate(),
+                                ticketModel.getEtaDate(), ticketModel.getNextStepDate(),
+                                ticketModel.getNextStepNote(), ticketModel.getFirm());
     }
 
     @GetMapping(value = "/filter")

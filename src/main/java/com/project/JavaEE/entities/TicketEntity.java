@@ -43,7 +43,7 @@ public class TicketEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "case", nullable = false)
-    private Case casetype;
+    private Case caseType;
 
     @Column(name = "creation_date")
     private Date creationDate;
@@ -52,10 +52,10 @@ public class TicketEntity {
     private Date etaDate;
 
     @Column(name = "ns_date")
-    private Date nextstepDate;
+    private Date nextStepDate;
 
     @Column(name = "ns_note")
-    private String nextstepNote;
+    private String nextStepNote;
 
     @Column(name = "firm", nullable = false)
     private String firm;

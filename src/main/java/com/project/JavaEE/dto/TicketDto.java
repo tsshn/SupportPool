@@ -34,16 +34,16 @@ public class TicketDto {
     private Priority priority;
 
     @NotEmpty(message = "Case cannot be empty")
-    private Case casetype;
+    private Case caseType;
 
     @NotEmpty(message = "Creation date cannot be empty")
     private Date creationDate;
 
     private Date etaDate;
 
-    private Date nextstepDate;
+    private Date nextStepDate;
 
-    private String nextstepNote;
+    private String nextStepNote;
 
     @NotEmpty(message = "Firm cannot be empty")
     private String firm;
