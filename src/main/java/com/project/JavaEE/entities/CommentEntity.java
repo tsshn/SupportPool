@@ -19,6 +19,9 @@ public class CommentEntity {
 
     @ManyToOne
     private TicketEntity ticket;
+    
+    @ManyToOne
+    private UserEntity author;
 
     @Column(name = "body_text")
     private String bodyText;

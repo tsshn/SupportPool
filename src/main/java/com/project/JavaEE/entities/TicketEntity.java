@@ -5,6 +5,7 @@ import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,6 +24,12 @@ public class TicketEntity {
 
     @Column(name = "title")
     private String title;
+
+    @ManyToOne
+    private UserEntity responsible_user;
+
+    @ManyToOne
+    private UserEntity requester_user;
 
     @Column(name = "body_text")
     private String bodyText;
