@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
+
     private final ObjectMapper objectMapper;
 
     LoginFilter(final AuthenticationManager authenticationManager, final ObjectMapper objectMapper) {
@@ -57,4 +58,5 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         private final String login;
         private final String password;
     }
+
 }

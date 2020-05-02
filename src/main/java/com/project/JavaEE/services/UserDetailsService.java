@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+
     private final UserRepository userRepository;
 
     private static List<GrantedAuthority> mapAuthorities(final List<PermissionEntity> permissions) {
@@ -27,12 +28,14 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         final UserEntity user = userRepository.get(username)
-                .orElseThrow(() -> new UsernameNotFoundException("No user with login: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("The user with login \"" + username + "\" was not found"));
         return new UserDetails(
                 username,
                 user.getPassword(),
                 mapAuthorities(user.getPermissions()),
-                user.getLiked()
+                user.getResponsibleFor(),
+                user.getRequested()
         );
     }
+
 }

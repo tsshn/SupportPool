@@ -1,10 +1,13 @@
 package com.project.JavaEE.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.JavaEE.repositories.UserRepository;
 import com.project.JavaEE.services.UserDetailsService;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +26,7 @@ import static org.springframework.http.HttpMethod.POST;
 @Configuration
 @EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true)
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+
     private final UserRepository usersRepository;
     private final ObjectMapper objectMapper;
 
@@ -62,4 +66,5 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         };
         return new LogoutFilter(new LogoutAdapter(), logoutHandler);
     }
+
 }

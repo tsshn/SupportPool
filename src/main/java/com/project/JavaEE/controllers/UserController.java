@@ -29,7 +29,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize(value = "'VIEW_ADMIN'") // <-- NOT SURE ABOUT THAT PART
+    @PreAuthorize("hasAuthority('VIEW_ADMIN')")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userModel, Permission permission) {
         List<PermissionEntity> permissions = new ArrayList<>();

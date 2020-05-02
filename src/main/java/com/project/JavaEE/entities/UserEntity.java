@@ -41,4 +41,7 @@ public class UserEntity {
     @OneToMany(mappedBy="requester_user")
     private Set<TicketEntity> requested;
 
+    @OneToMany(mappedBy="author")
+    private Set<CommentEntity> comments;
+
 }
