@@ -1,28 +1,50 @@
 package com.project.JavaEE.dto;
 
+import com.project.JavaEE.entities.CommentEntity;
+import com.project.JavaEE.entities.type.Case;
+import com.project.JavaEE.entities.type.Priority;
+import com.project.JavaEE.entities.type.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 public class TicketDto {
-    @NotEmpty(message = "Title needs to be filled")
-    @Size(min = 1)
+
+    @NotEmpty(message = "Title cannot be empty")
     private String title;
 
-    @NotEmpty(message = "ISBN needs to be filled")
-    @Pattern(regexp = "^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$",
-            message = "Incorrect ISBN format")
-    private String isbn;
+    @NotEmpty(message = "Body text cannot be empty")
+    private String bodyText;
 
-    @NotEmpty(message = "Author needs to be filled")
-    private String author;
+    @NotEmpty(message = "State cannot be empty")
+    private State state;
+
+    @NotEmpty(message = "Priority cannot be empty")
+    private Priority priority;
+
+    @NotEmpty(message = "Case cannot be empty")
+    private Case casetype;
+
+    @NotEmpty(message = "Creation date cannot be empty")
+    private Date creationDate;
+
+    private Date etaDate;
+
+    private Date nextstepDate;
+
+    private String nextstepNote;
+
+    @NotEmpty(message = "Firm cannot be empty")
+    private String firm;
+
+    private Set<CommentEntity> comments;
 }
