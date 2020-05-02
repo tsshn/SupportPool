@@ -1,6 +1,7 @@
 body {
     user-select: none;
     background: #2f3437;
+    line-height: 1.2;
     color: white;
     margin: 0;
     padding: 0;
@@ -249,6 +250,21 @@ select:hover {
     margin-top: 50px;
 }
 
+.ticket-content-holder {
+    margin-top: 20px;
+    max-width: 700px;
+    font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", SimSun, "Nanum Myeongjo", NanumMyeongjo, Batang, serif;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(71, 76, 80);
+    font-size: 18px;
+}
+
+.highlight {
+    background: rgba(255, 220, 73, 0.5);
+    color: #2f3437;
+    font-weight: 600;
+}
+
 .property {
     width: 100%;
     height: 35px;
@@ -278,6 +294,7 @@ select:hover {
     border-bottom: 1px solid rgb(71, 76, 80);
     padding: 10px 0;
     margin-top: 20px;
+    font-size: 14px;
 }
 
 .comment-timestamp, .comment-author {

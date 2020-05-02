@@ -59,7 +59,44 @@
 
 </div>
 
-</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+
+    $(function () {
+        $('#login').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/login',
+                dataType: 'json',
+                data: JSON.stringify({
+                    login: $(this).find('[name=login]').val(),
+                    password: $(this).find('[name=password]').val()
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Content-Type', 'application/json')
+                },
+                error: function (error) {
+                  console.log(error);
+                },
+                success: function () {
+                    window.location.href = window.location.origin + "/login";
+                }
+            });
+        });
+
+        $('#logout').click(function () {
+            $.ajax({
+                url: '/logout',
+                success: function () {
+                    window.location.href = window.location.origin + "/login";
+                }
+            });
+        });
+    });
+
+</script>
 
 </body>
 

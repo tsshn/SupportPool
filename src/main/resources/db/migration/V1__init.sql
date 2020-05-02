@@ -26,7 +26,7 @@ create table if not exists user_to_permissions
     constraint fk_user_to_permission_permission foreign key (permission_id) references permissions (id)
 );
 
-create table responsible_user_to_tickets
+/*create table responsible_user_to_tickets
 (
     user_id int not null,
     ticket_id int not null,
@@ -40,7 +40,7 @@ create table requester_user_to_tickets
     ticket_id int not null,
     constraint fk_requester_user_to_tickets_user foreign key (user_id) references users (id),
     constraint fk_requester_user_to_tickets_ticket foreign key (ticket_id) references tickets (id)
-);
+);*/
 
 insert into users (login, password)
 values ('admin', 'password'),

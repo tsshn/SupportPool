@@ -55,8 +55,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Value
     private static class UserCredentials {
-        private final String login;
-        private final String password;
+        String login;
+        String password;
     }
 
 }
