@@ -5,6 +5,8 @@ import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,10 +27,15 @@ public class TicketEntity {
     private String title;
 
     @ManyToOne
+    @JoinColumn(name = "responsible_user")
     private UserEntity responsible_user;
 
     @ManyToOne
+    @JoinColumn(name = "requester_user")
     private UserEntity requester_user;
+
+    @OneToMany(mappedBy = "ticket")
+    private Set<CommentEntity> comments;
 
     @Column(name = "body_text", nullable = false)
     private String bodyText;
@@ -59,8 +66,5 @@ public class TicketEntity {
 
     @Column(name = "firm", nullable = false)
     private String firm;
-
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private Set<CommentEntity> comments;
 
 }

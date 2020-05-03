@@ -39,6 +39,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
                                             final FilterChain chain, final Authentication auth) {
+        System.out.println("PAY ATTENTION - SUCCESSFUL");
+        System.out.println(request);
+        System.out.println(response);
         SecurityContextHolder.getContext().setAuthentication(auth);
         final UserDetails authenticatedUser = (UserDetails) auth.getPrincipal();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -50,6 +53,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(
             final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException failed
     ) {
+        System.out.println("PAY ATTENTION - UNSUCCESSFUL");
+        System.out.println(request);
+        System.out.println(response);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 

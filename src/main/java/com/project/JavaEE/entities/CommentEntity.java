@@ -2,6 +2,8 @@ package com.project.JavaEE.entities;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,13 +16,15 @@ public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket")
     private TicketEntity ticket;
-    
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author")
     private UserEntity author;
 
     @Column(name = "body_text")
@@ -28,4 +32,5 @@ public class CommentEntity {
 
     @Column(name = "creation_date")
     private Date creationDate;
+
 }

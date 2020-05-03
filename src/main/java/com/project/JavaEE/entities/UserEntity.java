@@ -35,13 +35,13 @@ public class UserEntity {
     )
     private List<PermissionEntity> permissions;
 
-    @OneToMany(mappedBy="responsible_user")
+    @OneToMany(mappedBy = "responsible_user")
     private Set<TicketEntity> responsibleFor;
 
-    @OneToMany(mappedBy="requester_user")
+    @OneToMany(mappedBy = "requester_user")
     private Set<TicketEntity> requested;
 
-    @OneToMany(mappedBy="author")
+    @OneToMany(mappedBy = "author")
     private Set<CommentEntity> comments;
 
 }
