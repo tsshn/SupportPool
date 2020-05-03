@@ -17,7 +17,7 @@ public class PageController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/login")
+    @GetMapping({"/login", "/"})
     public String login() {
         return "login";
     }

@@ -57,28 +57,6 @@
                     <th>📆 Created</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>Some title</td>
-                    <td>Open</td>
-                    <td>High</td>
-                    <td>Question</td>
-                    <td>Invasystems</td>
-                    <td>12/05/2020</td>
-                    <td>
-                        <button class="grid-button">Open</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Some title</td>
-                    <td>Solved</td>
-                    <td>Low</td>
-                    <td>Bug</td>
-                    <td>Invasystems</td>
-                    <td>12/05/2020</td>
-                    <td>
-                        <button class="grid-button">Open</button>
-                    </td>
-                </tr>
                 </thead>
                 <tbody id="tickets-grid">
                 </tbody>
@@ -97,6 +75,48 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
+
+    $(function() {
+
+        $.ajax({
+                url: '/tickets',
+                success: (response) => (fillTicketGrid(response))
+            }
+        )
+    })
+
+    function fillTicketGrid(data) {
+        let $ticketGrid = $('#tickets-grid');
+        $ticketGrid.empty();
+        data.forEach(ticket => {
+            $.ajax({
+                    url: '/tickets',
+                    success: () => {
+                        $ticketGrid.append('<tr>' +
+                            '<td>' + ticket.title + '</td>' +
+                            '<td>' + ticket.state + '</td>' +
+                            '<td>' + ticket.priority + '</td>' +
+                            '<td>' + ticket.caseType + '</td>' +
+                            '<td>' + ticket.firm + '</td>' +
+                            '<td>' + ticket.creationDate + '</td>' +
+                            '<td><button onclick="openTicket(' + ticket.id + ')" class="grid-button">Open</button></td></tr>');
+                    }
+                }
+            )
+        })
+    }
+
+    function openTicket(id) {
+        $.ajax({
+            type: 'GET',
+            url: `/ticket/${id}`,
+            dataType: 'json',
+            success: function(response) {
+                window.location.href = window.location.origin + `/ticket/${id}`;
+                console.log(response);
+            }
+        })
+    }
 
 </script>
 
