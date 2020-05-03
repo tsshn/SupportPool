@@ -104,8 +104,7 @@
 
                 <div class="property">
                     <div class="property-name"><span class="property-icon">📆</span>Creation Date</div>
-                    <div id="date" class="property-value"
-                         th:text="${ticket.creationDate}"></div>
+                    <div id="date" class="property-value"></div>
                 </div>
 
             </div>
@@ -160,7 +159,7 @@
 
         $.ajax({
                 url: `/getTicket/${$ticketId}`,
-                success: (response) => (updateSelects(response))
+                success: (response) => (fill(response))
             }
         )
 
@@ -170,13 +169,17 @@
             }
         )
 
-
     });
 
-    function updateSelects(data) {
+    function fill(data) {
         $('#state').val(data.state);
         $('#priority').val(data.priority);
         $('#case').val(data.caseType);
+
+        let date = new Date(data.creationDate);
+        let dateField = $('#date');
+        dateField.empty();
+        dateField.append(`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`);
     }
 
 </script>

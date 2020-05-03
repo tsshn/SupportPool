@@ -116,13 +116,14 @@
             $.ajax({
                     url: '/tickets',
                     success: () => {
+                        let date = new Date(ticket.creationDate);
                         $ticketGrid.append('<tr>' +
                             '<td>' + ticket.title + '</td>' +
                             '<td>' + ticket.state + '</td>' +
                             '<td>' + ticket.priority + '</td>' +
                             '<td>' + ticket.caseType + '</td>' +
                             '<td>' + ticket.firm + '</td>' +
-                            '<td>' + ticket.creationDate + '</td>' +
+                            '<td>' + `${date.toLocaleDateString()} ${date.toLocaleTimeString()}` + '</td>' +
                             '<td><button onclick="openTicket(' + ticket.id + ')" class="grid-button">Open</button></td></tr>');
                     }
                 }
