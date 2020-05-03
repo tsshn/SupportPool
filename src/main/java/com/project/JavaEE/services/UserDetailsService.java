@@ -32,10 +32,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         return new UserDetails(
                 username,
                 user.getPassword(),
-                mapAuthorities(user.getPermissions()),
-                user.getResponsibleFor(),
-                user.getRequested(),
-                user.getComments()
+                mapAuthorities(user.getPermissions())
         );
     }
 

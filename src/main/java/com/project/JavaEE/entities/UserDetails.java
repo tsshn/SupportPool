@@ -13,21 +13,11 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class UserDetails extends User {
 
-    private final Set<TicketEntity> responsibleFor;
-    private final Set<TicketEntity> requested;
-    private final Set<CommentEntity> comments;
-
     public UserDetails(
             final String username,
             final String password,
-            final List<? extends GrantedAuthority> authorities,
-            final Set<TicketEntity> responsibleFor,
-            final Set<TicketEntity> requested,
-            final Set<CommentEntity> comments) {
+            final List<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
-        this.responsibleFor = responsibleFor;
-        this.requested = requested;
-        this.comments = comments;
     }
 
 }

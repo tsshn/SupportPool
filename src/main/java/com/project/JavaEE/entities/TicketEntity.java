@@ -25,11 +25,11 @@ public class TicketEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "responsible_user")
     private UserEntity responsibleUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requester_user")
     private UserEntity requesterUser;
 

@@ -15,9 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("SELECT user " +
             "FROM UserEntity user " +
             "LEFT JOIN FETCH user.permissions " +
-            "LEFT JOIN FETCH user.responsibleFor " +
-            "LEFT JOIN FETCH user.requested " +
-            "LEFT JOIN FETCH user.comments " +
             "WHERE user.login = :login")
     Optional<UserEntity> get(@Param("login") String login);
 

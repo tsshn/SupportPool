@@ -109,7 +109,7 @@ values ((
             where permission = 'VIEW_SALES'
         ));
 
-/*insert into tickets (title, responsible_user, requester_user, body_text, state, priority, case_type, creation_date,
+insert into tickets (title, responsible_user, requester_user, body_text, state, priority, case_type, creation_date,
                      eta_date, ns_date, ns_note, firm)
 values ('My CSS is broken!',
         (
@@ -130,4 +130,4 @@ values ('My CSS is broken!',
         '2020-05-01',
         '2020-05-01',
         'bruh',
-        'Invasystems');*/
+        'Invasystems');
