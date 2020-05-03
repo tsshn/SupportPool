@@ -38,18 +38,78 @@
             <div class="sub-container-title">🎫 Ticket</div>
 
             <div class="properties-holder">
+
                 <div class="property">
-                    <div class="property-name">Title</div>
-                    <div class="property-value">Some Title</div>
+                    <div class="property-name"><span class="property-icon">🔖</span>Title</div>
+                    <div id="title" contenteditable="true" spellcheck="false"
+                         class="property-value text-property"></div>
                 </div>
+
                 <div class="property">
-                    <div class="property-name">State</div>
-                    <div class="property-value">Open</div>
+                    <div class="property-name"><span class="property-icon">⚖</span>State</div>
+                    <div class="property-value select-property">
+                        <select id="state">
+                            <option value="0">New</option>
+                            <option value="1">Open</option>
+                            <option value="2">Done</option>
+                            <option value="3">Solved</option>
+                        </select>
+                    </div>
                 </div>
+
+                <div class="property">
+                    <div class="property-name"><span class="property-icon">📌</span>Priority</div>
+                    <div class="property-value select-property">
+                        <select id="priority">
+                            <option value="0">High</option>
+                            <option value="1">Normal</option>
+                            <option value="2">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="property">
+                    <div class="property-name"><span class="property-icon">🔗</span>Firm</div>
+                    <div id="firm" contenteditable="true" spellcheck="false" class="property-value text-property"></div>
+                </div>
+
+                <div class="property">
+                    <div class="property-name"><span class="property-icon">📨</span>Requester</div>
+                    <div class="property-value select-property">
+                        <select id="requester">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="property">
+                    <div class="property-name"><span class="property-icon">✏</span>Responsible</div>
+                    <div class="property-value select-property">
+                        <select id="responsible">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="property">
+                    <div class="property-name"><span class="property-icon">📮</span>Case</div>
+                    <div class="property-value select-property">
+                        <select id="case">
+                            <option value="0">Bug</option>
+                            <option value="1">Question</option>
+                            <option value="2">Feature</option>
+                            <option value="3">Call</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="property">
+                    <div class="property-name"><span class="property-icon">📆</span>Creation Date</div>
+                    <div id="date" contenteditable="true" spellcheck="false" class="property-value text-property"></div>
+                </div>
+
             </div>
 
             <div class="ticket-content-holder">
-                <span class="highlight">
+                <span id="body-text" class="highlight">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
@@ -57,8 +117,11 @@
                 occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </span>
             </div>
+            <div class="save-button">
+                <button>Save</button>
+            </div>
 
-            <div class="comments-holder">
+            <div id="comments-holder" class="comments-holder">
                 <div class="comment">
                     <div class="comment-timestamp">11/02/2020 13:12</div>
                     <div class="comment-author">mhalaida</div>
