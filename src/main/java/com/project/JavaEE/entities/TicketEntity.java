@@ -1,5 +1,6 @@
 package com.project.JavaEE.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
@@ -25,10 +26,12 @@ public class TicketEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "responsible_user")
     private UserEntity responsibleUser;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requester_user")
     private UserEntity requesterUser;
