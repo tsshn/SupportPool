@@ -103,14 +103,27 @@ public class TicketService {
     }
 
     @Transactional
-    public List<TicketEntity> filter(String criteria, String filterInput) {
-        return switch (criteria) {
-            case "title" -> getByTitle(filterInput);
-            case "firm" -> getByFirm(filterInput);
-            case "state" -> getByState(State.valueOf(filterInput.toUpperCase()));
-            case "case" -> getByCase(Case.valueOf(filterInput.toUpperCase()));
-            default -> getAll();
-        };
+    public List<TicketEntity> filter(String property, String query) {
+        if (query.equals("")) {
+            return getAll();
+        }
+        switch (property) {
+            case "title":
+                return getByTitle(query);
+            case "firm":
+                return getByFirm(query);
+            case "state":
+                State state = State.values()[Integer.parseInt(query)];
+                return getByState(state);
+            case "priority":
+                Priority priority = Priority.values()[Integer.parseInt(query)];
+                return getByPriority(priority);
+            case "case":
+                Case casetype = Case.values()[Integer.parseInt(query)];
+                return getByCase(casetype);
+            default:
+                return getAll();
+        }
     }
 
     @Transactional
@@ -129,4 +142,7 @@ public class TicketService {
 
     @Transactional
     public List<TicketEntity> getByFirm(String firm) { return ticketRepository.findByFirm('%' + firm + '%'); }
+
+    @Transactional
+    public List<TicketEntity> getByPriority(Priority priority) { return ticketRepository.findByPriority(priority); }
 }

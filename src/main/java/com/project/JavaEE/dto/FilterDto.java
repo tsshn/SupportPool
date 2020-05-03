@@ -11,5 +11,5 @@ import lombok.ToString;
 @RequiredArgsConstructor(staticName = "of")
 public class FilterDto {
     private final String property;
-    private final String input;
+    private final String query;
 }

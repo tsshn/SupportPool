@@ -74,9 +74,9 @@ public class TicketController {
         userService.addTicket(reqUserModel.getLogin(), "requester", newTicket.getId());
     }
 
-    @GetMapping(value = "/filter")
+    @PostMapping(value = "/filterTickets")
     public ResponseEntity<List<TicketEntity>> filter(@RequestBody final FilterDto filterDto) {
-        return ResponseEntity.ok(ticketService.filter(filterDto.getProperty(), filterDto.getInput()));
+        return ResponseEntity.ok(ticketService.filter(filterDto.getProperty(), filterDto.getQuery()));
     }
 
     @GetMapping(value = "/{ticketId}/comments")

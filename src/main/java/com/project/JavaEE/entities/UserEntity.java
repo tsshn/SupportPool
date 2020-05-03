@@ -1,5 +1,6 @@
 package com.project.JavaEE.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -35,12 +36,15 @@ public class UserEntity {
     )
     private List<PermissionEntity> permissions;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "responsibleUser")
     private Set<TicketEntity> responsibleFor;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "requesterUser")
     private Set<TicketEntity> requested;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private Set<CommentEntity> comments;
 

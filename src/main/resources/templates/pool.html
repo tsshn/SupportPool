@@ -18,11 +18,11 @@
 
     <div class="sidebar">
         <div class="sidebar-member workspace-label"><span class="sidebar-member-icon">📚</span>Workspace Name</div>
-        <div class="sidebar-member chosen"><a href="#"><span class="sidebar-member-icon">🚨</span><span
+        <div class="sidebar-member chosen"><a href="/pool"><span class="sidebar-member-icon">🚨</span><span
                 class="sidebar-member-label">Support Pool</span></a></div>
-        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a href="#"><span class="sidebar-member-icon">🤝</span><span
+        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a href="/team"><span class="sidebar-member-icon">🤝</span><span
                 class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🔑</span><span
+        <div class="sidebar-member"><a href="/login"><span class="sidebar-member-icon">🔑</span><span
                 class="sidebar-member-label">Login</span></a></div>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
@@ -41,6 +41,10 @@
                     <input name="query" placeholder="Query">
                     <select name="select">
                         <option selected th:value="title">Title</option>
+                        <option th:value="state">State</option>
+                        <option th:value="priority">Priority</option>
+                        <option th:value="case">Case</option>
+                        <option th:value="firm">Firm</option>
                     </select>
                     <button type="submit">Filter</button>
                 </form>
@@ -83,6 +87,26 @@
                 success: (response) => (fillTicketGrid(response))
             }
         )
+
+        $('#filter').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/filterTickets',
+                dataType: 'json',
+                data: JSON.stringify({
+                    query: $(this).find('[name=query]').val(),
+                    property: $(this).find('[name=select]').val()
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                },
+                success: function (response) {
+                    fillTicketGrid(response);
+                }
+            })
+        });
+
     })
 
     function fillTicketGrid(data) {
@@ -109,7 +133,7 @@
     function openTicket(id) {
         $.ajax({
             type: 'GET',
-            url: `/ticket/${id}`,
+            url: `/getTicket/${id}`,
             dataType: 'json',
             success: function(response) {
                 window.location.href = window.location.origin + `/ticket/${id}`;
