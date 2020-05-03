@@ -1,6 +1,7 @@
 package com.project.JavaEE.dto;
 
 import com.project.JavaEE.entities.TicketEntity;
+import com.project.JavaEE.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,9 @@ public class CommentDto {
 
     @NotEmpty(message = "Parent ticket cannot be empty")
     private TicketEntity ticket;
+
+    @NotEmpty(message = "Author cannot be empty")
+    private UserEntity author;
 
     @NotEmpty(message = "Body text cannot be empty")
     private String bodyText;

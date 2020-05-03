@@ -1,25 +1,30 @@
 package com.project.JavaEE.services;
 
+import com.project.JavaEE.entities.CommentEntity;
 import com.project.JavaEE.entities.TicketEntity;
+import com.project.JavaEE.entities.UserEntity;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
+import com.project.JavaEE.repositories.CommentRepository;
 import com.project.JavaEE.repositories.TicketRepository;
+import com.project.JavaEE.repositories.UserRepository;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class TicketService {
 
+    private final CommentRepository commentRepository;
     private final TicketRepository ticketRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public TicketEntity createTicket(String title, String body_text, State state,
@@ -57,8 +62,38 @@ public class TicketService {
         ticket.setNextStepDate(nextStepDate);
         ticket.setNextStepNote(nextStepNote);
         ticket.setFirm(firm);
-        ticket.setComments(new HashSet<>());
+        //ticket.setComments(new HashSet<>());
         return ticketRepository.saveAndFlush(ticket);
+    }
+
+    @Transactional
+    public Set<CommentEntity> getTicketComments(final Integer ticketId) throws NotFoundException {
+        final TicketEntity ticket = ticketRepository.get(ticketId)
+                .orElseThrow(() -> new NotFoundException("Ticket with id \"" + ticketId + "\" not found"));
+        return ticket.getComments();
+    }
+
+    @Transactional
+    public TicketEntity addComment(final Integer commentId,
+                                    final String username,
+                                    final Integer ticketId) {
+
+        final TicketEntity ticket = ticketRepository.get(ticketId)
+                .orElseThrow(() -> new EntityNotFoundException("Ticket with id " + ticketId + " not found"));
+
+        final CommentEntity newComment = commentRepository.get(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment with id \"" + commentId + "\" not found"));
+
+        final UserEntity user = userRepository.get(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with login \"" + username + "\" not found"));
+
+        Set<CommentEntity> currentComments = new HashSet<>(ticket.getComments());
+
+        newComment.setAuthor(user);
+        currentComments.add(newComment);
+        ticket.setComments(currentComments);
+        ticketRepository.saveAndFlush(ticket);
+        return ticket;
     }
 
     @Transactional

@@ -2,8 +2,6 @@ package com.project.JavaEE.entities;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
