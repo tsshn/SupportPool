@@ -45,13 +45,17 @@ public class UserService {
 
     @javax.transaction.Transactional
     public List<UserEntity> filter(String property, String query) {
-        Permission p = Permission.values()[0];
-        System.out.println(p);
-        return switch (property) {
-            case "login" -> userRepository.filterByLogin('%' + query + '%');
-            case "permission" -> userRepository.filterByPermission(p);
-            default -> getAll();
-        };
+        if(query.equals(""))
+            return getAll();
+        switch (property) {
+            case "login":
+                return userRepository.filterByLogin('%' + query + '%');
+            case "permission":
+                Permission p = Permission.values()[Integer.parseInt(query)];
+                return userRepository.filterByPermission(p);
+            default:
+                return getAll();
+        }
     }
 
     @Transactional

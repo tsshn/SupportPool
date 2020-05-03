@@ -1,6 +1,5 @@
 package com.project.JavaEE.repositories;
 
-import com.project.JavaEE.entities.PermissionEntity;
 import com.project.JavaEE.entities.UserEntity;
 import com.project.JavaEE.entities.type.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +24,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("SELECT user FROM UserEntity user WHERE user.login LIKE :login")
     ArrayList<UserEntity> filterByLogin(@Param("login") String login);
 
-    @Query("SELECT user FROM UserEntity user INNER JOIN user.permissions utp WHERE utp.permission = :permission")
+    @Query("SELECT user FROM UserEntity user LEFT JOIN FETCH user.permissions utp WHERE utp.permission = :permission")
     List<UserEntity> filterByPermission(@Param("permission") Permission permission);
 
 }
