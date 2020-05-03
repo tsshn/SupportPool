@@ -1,6 +1,7 @@
 package com.project.JavaEE.repositories;
 
 import com.project.JavaEE.entities.TicketEntity;
+import com.project.JavaEE.entities.UserEntity;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
@@ -37,4 +38,7 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Integer> {
 
     @Query("SELECT t FROM TicketEntity t WHERE t.priority = :priority")
     List<TicketEntity> findByPriority(@Param("priority") Priority priority);
+    
+    /*@Query("SELECT t FROM TicketEntity t WHERE t.title LIKE :title")
+    UserEntity getRequester(@Param("ud") Integer id);*/
 }

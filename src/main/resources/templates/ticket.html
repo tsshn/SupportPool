@@ -35,7 +35,7 @@
 
         <div class="sub-container">
 
-            <div class="sub-container-title">🎫 Ticket</div>
+            <div class="sub-container-title">🎫 Ticket <span id="ticketId" th:text="${ticket.id}"></span></div>
 
             <div class="properties-holder">
 
@@ -49,10 +49,10 @@
                     <div class="property-name"><span class="property-icon">⚖</span>State</div>
                     <div class="property-value select-property">
                         <select id="state">
-                            <option value="0">New</option>
-                            <option value="1">Open</option>
-                            <option value="2">Done</option>
-                            <option value="3">Solved</option>
+                            <option value="NEW">New</option>
+                            <option value="OPEN">Open</option>
+                            <option value="DONE">Done</option>
+                            <option value="SOLVED">Solved</option>
                         </select>
                     </div>
                 </div>
@@ -61,16 +61,17 @@
                     <div class="property-name"><span class="property-icon">📌</span>Priority</div>
                     <div class="property-value select-property">
                         <select id="priority">
-                            <option value="0">High</option>
-                            <option value="1">Normal</option>
-                            <option value="2">Low</option>
+                            <option value="HIGH">High</option>
+                            <option value="NORMAL">Normal</option>
+                            <option value="LOW">Low</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="property">
                     <div class="property-name"><span class="property-icon">🔗</span>Firm</div>
-                    <div id="firm" contenteditable="true" spellcheck="false" class="property-value text-property"></div>
+                    <div id="firm" contenteditable="true" spellcheck="false" class="property-value text-property"
+                         th:text="${ticket.firm}"></div>
                 </div>
 
                 <div class="property">
@@ -93,28 +94,24 @@
                     <div class="property-name"><span class="property-icon">📮</span>Case</div>
                     <div class="property-value select-property">
                         <select id="case">
-                            <option value="0">Bug</option>
-                            <option value="1">Question</option>
-                            <option value="2">Feature</option>
-                            <option value="3">Call</option>
+                            <option value="BUG">Bug</option>
+                            <option value="QUESTION">Question</option>
+                            <option value="FEATURE">Feature</option>
+                            <option value="CALL">Call</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="property">
                     <div class="property-name"><span class="property-icon">📆</span>Creation Date</div>
-                    <div id="date" contenteditable="true" spellcheck="false" class="property-value text-property"></div>
+                    <div id="date" class="property-value"
+                         th:text="${ticket.creationDate}"></div>
                 </div>
 
             </div>
 
             <div class="ticket-content-holder">
-                <span id="body-text" class="highlight">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <span id="body-text" class="highlight" th:text="${ticket.bodyText}">
                 </span>
             </div>
             <button style="margin-top: 10px;">Save</button>
@@ -152,6 +149,37 @@
     </div>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+
+    $(function () {
+
+        let $ticketId = $('#ticketId').text();
+
+        $.ajax({
+                url: `/getTicket/${$ticketId}`,
+                success: (response) => (updateSelects(response))
+            }
+        )
+
+        $.ajax({
+                url: `/getTicket/${$ticketId}`,
+                success: (response) => {console.log(response)}
+            }
+        )
+
+
+    });
+
+    function updateSelects(data) {
+        $('#state').val(data.state);
+        $('#priority').val(data.priority);
+        $('#case').val(data.caseType);
+    }
+
+</script>
 
 </body>
 
