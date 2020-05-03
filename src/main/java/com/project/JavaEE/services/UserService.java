@@ -25,6 +25,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
 
+    @javax.transaction.Transactional
+    public List<UserEntity> getAll() {
+        return userRepository.findAll();
+    }
+
     @Transactional
     public UserEntity create(final String username, final String password, final List<PermissionEntity> permissions) {
         final UserEntity user = new UserEntity();
@@ -33,6 +38,28 @@ public class UserService {
         user.setResponsibleFor(new HashSet<>());
         user.setPermissions(permissions);
         return userRepository.saveAndFlush(user);
+    }
+
+    /*@javax.transaction.Transactional
+    public List<UserEntity> filter(String criteria, String query) {
+        return switch (criteria) {
+            case "login" -> userRepository.filterByLogin(query);
+            case "role" -> userRepository.filterByRole(query);
+            default -> getAll();
+        };
+    }*/
+
+    @Transactional
+    public List<UserEntity> removeUser(final String userId) throws UsernameNotFoundException {
+        userRepository.delete(userRepository.getOne(Integer.parseInt(userId)));
+        return userRepository.findAll();
+    }
+
+    @Transactional
+    public String getLogin(final String username) throws UsernameNotFoundException {
+        final UserEntity user = userRepository.get(username)
+                .orElseThrow(() -> new UsernameNotFoundException("The user with login \"" + username + "\" was not found"));
+        return user.getLogin();
     }
 
     @Transactional

@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,36 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('VIEW_ADMIN')")
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userModel, Permission permission) {
+    @RequestMapping(value = "/createUser", method = RequestMethod.POST)
+    public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userModel, @Valid @RequestBody final Permission permission) {
+        System.out.println(userModel);
         List<PermissionEntity> permissions = new ArrayList<>();
         permissions.add(new PermissionEntity(1, permission));
         UserEntity user = userService.create(userModel.getLogin(), userModel.getPassword(), permissions);
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getPassword(), user.getLogin()));
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getPassword(), user.getLogin(), user.getPermissions()));
+    }
+
+    /*@RequestMapping(value = "/filterUsers", method = {RequestMethod.POST})
+    public ResponseEntity<List<UserEntity>> filter(@RequestBody final UserDto userDto) {
+        System.out.println(userDto.getPermissions().toString());
+        return ResponseEntity.ok(userService.filter(userDto.getLogin(), userDto.getPermissions().toString()));
+    }*/
+
+    @RequestMapping(value = "/removeUser/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity<List<UserEntity>> removeUser(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.removeUser(userId));
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/getUsers")
+    public List<UserEntity> getAll() {
+        return userService.getAll();
+    }
+
+    @GetMapping(value = "/getLogin")
+    public ResponseEntity<String> getLogin() {
+        final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(userService.getLogin(userDetails.getUsername()));
     }
 
     @GetMapping("/details")
