@@ -1,6 +1,7 @@
 package com.project.JavaEE.repositories;
 
 import com.project.JavaEE.entities.TicketEntity;
+import com.project.JavaEE.entities.UserEntity;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.State;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,7 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Integer> {
 
     @Query("SELECT t FROM TicketEntity t WHERE t.firm LIKE :firm")
     List<TicketEntity> findByFirm(@Param("firm") String firm);
+
+    /*@Query("SELECT t FROM TicketEntity t WHERE t.title LIKE :title")
+    UserEntity getRequester(@Param("ud") Integer id);*/
 }
