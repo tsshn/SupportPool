@@ -1,10 +1,13 @@
 package com.project.JavaEE.repositories;
 
+import com.project.JavaEE.entities.PermissionEntity;
 import com.project.JavaEE.entities.UserEntity;
+import com.project.JavaEE.entities.type.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +22,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             "WHERE user.login = :login")
     Optional<UserEntity> get(@Param("login") String login);
 
-    /*@Query("SELECT user FROM UserEntity user WHERE user.login LIKE :login")
-    List<UserEntity> filterByLogin(@Param("login") String login);
+    @Query("SELECT user FROM UserEntity user WHERE user.login LIKE :login")
+    ArrayList<UserEntity> filterByLogin(@Param("login") String login);
 
-    @Query("SELECT user FROM UserEntity user WHERE :permission HAVING user.permissions")
-    List<UserEntity> filterByRole(@Param("permission") String permission);*/
+    @Query("SELECT user FROM UserEntity user INNER JOIN user.permissions utp WHERE utp.permission = :permission")
+    List<UserEntity> filterByPermission(@Param("permission") Permission permission);
 
 }

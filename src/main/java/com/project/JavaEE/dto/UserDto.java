@@ -24,6 +24,4 @@ public class UserDto {
     @Pattern(regexp = "^(?=.{8,20}$)[a-zA-Z0-9._]+(?<![_.])$", message = "Incorrect password format")
     private String password;
 
-    private List<PermissionEntity> permissions;
-
 }

@@ -2,10 +2,8 @@ package com.project.JavaEE.entities;
 
 import com.project.JavaEE.entities.type.Permission;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.validator.constraints.pl.REGON;
 
 import javax.persistence.*;
 
@@ -16,6 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 public class PermissionEntity {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,4 +23,5 @@ public class PermissionEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "permission", unique = true)
     private Permission permission;
+
 }

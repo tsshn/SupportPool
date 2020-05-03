@@ -1,6 +1,7 @@
 package com.project.JavaEE.controllers;
 
 import com.project.JavaEE.dto.UserDto;
+import com.project.JavaEE.dto.UserFilterDto;
 import com.project.JavaEE.entities.TicketEntity;
 import com.project.JavaEE.entities.PermissionEntity;
 import com.project.JavaEE.entities.UserEntity;
@@ -11,10 +12,8 @@ import com.project.JavaEE.entities.type.Permission;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +30,18 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('VIEW_ADMIN')")
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userModel, @Valid @RequestBody final Permission permission) {
-        System.out.println(userModel);
+    @RequestMapping(value = "/createUser/{permission}", method = RequestMethod.POST)
+    public ResponseEntity<UserDto> create(@Valid @RequestBody final UserDto userDto, @PathVariable int permission) {
         List<PermissionEntity> permissions = new ArrayList<>();
-        permissions.add(new PermissionEntity(1, permission));
-        UserEntity user = userService.create(userModel.getLogin(), userModel.getPassword(), permissions);
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getPassword(), user.getLogin(), user.getPermissions()));
+        permissions.add(new PermissionEntity(permission, Permission.VIEW_ADMIN));
+        UserEntity user = userService.create(userDto.getLogin(), userDto.getPassword(), permissions);
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getPassword(), user.getLogin()));
     }
 
-    /*@RequestMapping(value = "/filterUsers", method = {RequestMethod.POST})
-    public ResponseEntity<List<UserEntity>> filter(@RequestBody final UserDto userDto) {
-        System.out.println(userDto.getPermissions().toString());
-        return ResponseEntity.ok(userService.filter(userDto.getLogin(), userDto.getPermissions().toString()));
-    }*/
+    @RequestMapping(value = "/filterUsers", method = {RequestMethod.POST})
+    public ResponseEntity<List<UserEntity>> filter(@RequestBody final UserFilterDto filterDto) {
+        return ResponseEntity.ok(userService.filter(filterDto.getProperty(), filterDto.getQuery()));
+    }
 
     @RequestMapping(value = "/removeUser/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity<List<UserEntity>> removeUser(@PathVariable String userId) {

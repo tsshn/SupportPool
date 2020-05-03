@@ -3,6 +3,7 @@ package com.project.JavaEE.services;
 import com.project.JavaEE.entities.TicketEntity;
 import com.project.JavaEE.entities.PermissionEntity;
 import com.project.JavaEE.entities.UserEntity;
+import com.project.JavaEE.entities.type.Permission;
 import com.project.JavaEE.repositories.TicketRepository;
 import com.project.JavaEE.repositories.UserRepository;
 
@@ -35,19 +36,23 @@ public class UserService {
         final UserEntity user = new UserEntity();
         user.setLogin(username);
         user.setPassword(password);
-        user.setResponsibleFor(new HashSet<>());
         user.setPermissions(permissions);
+        user.setResponsibleFor(new HashSet<>());
+        user.setRequested(new HashSet<>());
+        user.setComments(new HashSet<>());
         return userRepository.saveAndFlush(user);
     }
 
-    /*@javax.transaction.Transactional
-    public List<UserEntity> filter(String criteria, String query) {
-        return switch (criteria) {
-            case "login" -> userRepository.filterByLogin(query);
-            case "role" -> userRepository.filterByRole(query);
+    @javax.transaction.Transactional
+    public List<UserEntity> filter(String property, String query) {
+        Permission p = Permission.values()[0];
+        System.out.println(p);
+        return switch (property) {
+            case "login" -> userRepository.filterByLogin('%' + query + '%');
+            case "permission" -> userRepository.filterByPermission(p);
             default -> getAll();
         };
-    }*/
+    }
 
     @Transactional
     public List<UserEntity> removeUser(final String userId) throws UsernameNotFoundException {
