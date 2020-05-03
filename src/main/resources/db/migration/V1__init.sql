@@ -109,6 +109,6 @@ values ((
             where permission = 'VIEW_SALES'
         ));
 
-insert into tickets (title, responsible_user, requester_user, body_text, state, priority, case_type, creation_date, eta_date, ns_date, ns_note, firm)
-values ('My CSS is broken!', 2, 3, 'Bro the CSS is all messed up what the hell', 'NEW', 'HIGH', 'BUG', '2020-05-01', '2020-05-01', '2020-05-01', 'bruh', 'Invasystems'),
-       ('My HTML is broken!', 2, 3, 'Bro the HTML is all messed up what the hell', 'NEW', 'HIGH', 'BUG', '2020-05-02', '2020-05-01', '2020-05-01', 'no', 'NetApp');
+ insert into tickets (title, responsible_user, requester_user, body_text, state, priority, case_type, creation_date, eta_date, ns_date, ns_note, firm)
+ values ('My CSS is broken!', 2, 3, 'Bro the CSS is all messed up what the hell', 'NEW', 'HIGH', 'BUG', '2020-05-01', '2020-05-01', '2020-05-01', 'bruh', 'Invasystems'),
+        ('My HTML is broken!', 2, 3, 'Bro the HTML is all messed up what the hell', 'NEW', 'HIGH', 'BUG', '2020-05-02', '2020-05-01', '2020-05-01', 'no', 'NetApp');
