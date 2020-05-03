@@ -18,12 +18,12 @@
 
     <div class="sidebar">
         <div class="sidebar-member workspace-label"><span class="sidebar-member-icon">📚</span>Workspace Name</div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🚨</span><span
+        <div class="sidebar-member"><a href="/pool"><span class="sidebar-member-icon">🚨</span><span
                 class="sidebar-member-label">Support Pool</span></a></div>
         <div class="sidebar-member chosen" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a
                 href="#"><span class="sidebar-member-icon">🤝</span><span
                 class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🔑</span><span
+        <div class="sidebar-member"><a href="/login"><span class="sidebar-member-icon">🔑</span><span
                 class="sidebar-member-label">Login</span></a></div>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span

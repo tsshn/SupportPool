@@ -20,9 +20,9 @@
         <div class="sidebar-member workspace-label"><span class="sidebar-member-icon">📚</span>Workspace Name</div>
         <div class="sidebar-member chosen"><a href="#"><span class="sidebar-member-icon">🚨</span><span
                 class="sidebar-member-label">Support Pool</span></a></div>
-        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a href="#"><span class="sidebar-member-icon">🤝</span><span
+        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a href="/team"><span class="sidebar-member-icon">🤝</span><span
                 class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🔑</span><span
+        <div class="sidebar-member"><a href="/login"><span class="sidebar-member-icon">🔑</span><span
                 class="sidebar-member-label">Login</span></a></div>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
@@ -97,6 +97,30 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
+
+//    $(function () {
+//
+//
+//
+//        $('#login').submit(function (e) {
+//            e.preventDefault();
+//            $.ajax({
+//                type: 'POST',
+//                url: '/login',
+//                dataType: 'json',
+//                data: JSON.stringify({
+//                    login: $(this).find('[name=login]').val(),
+//                    password: $(this).find('[name=password]').val()
+//                }),
+//                beforeSend: function (xhr) {
+//                    xhr.setRequestHeader('Content-Type', 'application/json')
+//                },
+//                success: function () {
+//                    window.location.href = window.location.origin + "/login";
+//                }
+//            });
+//        });
+//    });
 
 </script>
 

@@ -18,12 +18,12 @@
 
     <div class="sidebar">
         <div class="sidebar-member workspace-label"><span class="sidebar-member-icon">📚</span>Workspace Name</div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🚨</span><span
+        <div class="sidebar-member"><a href="/pool"><span class="sidebar-member-icon">🚨</span><span
                 class="sidebar-member-label">Support Pool</span></a></div>
         <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a
-                href="#"><span class="sidebar-member-icon">🤝</span><span
+                href="/team"><span class="sidebar-member-icon">🤝</span><span
                 class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🔑</span><span
+        <div class="sidebar-member"><a href="/login"><span class="sidebar-member-icon">🔑</span><span
                 class="sidebar-member-label">Login</span></a></div>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
@@ -38,11 +38,11 @@
             <div class="sub-container-title">🎫 Ticket</div>
 
             <div class="properties-holder">
-                <div class="property">
+                <div id="t_title" class="property">
                     <div class="property-name">Title</div>
                     <div class="property-value">Some Title</div>
                 </div>
-                <div class="property">
+                <div id="t_state" class="property">
                     <div class="property-name">State</div>
                     <div class="property-value">Open</div>
                 </div>
@@ -91,6 +91,16 @@
     </div>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+
+//    $(document).ready(function () {
+//        console.log("bruh");
+//    })
+
+</script>
 
 </body>
 
