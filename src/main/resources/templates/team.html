@@ -63,9 +63,9 @@
                     <input name="login" placeholder="Login">
                     <input name="password" type="password" placeholder="Password">
                     <select name="permissions">
+                        <option th:value="1">Administrator</option>
                         <option selected th:value="2">Support</option>
                         <option th:value="3">Sales</option>
-                        <option th:value="1">Administrator</option>
                     </select>
                     <button type="submit">Create</button>
                 </form>
