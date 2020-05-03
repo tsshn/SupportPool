@@ -7,32 +7,32 @@ create table if not exists users
 
 create table if not exists tickets
 (
-    id                  int auto_increment primary key,
-    title               varchar(100) not null,
-    responsible_user int not null,
-    foreign key (responsible_user) references users(id),
-    requester_user int not null,
-    foreign key (requester_user) references users(id),
-    body_text varchar(500) not null,
-    state varchar(15) not null,
-    priority varchar(15) not null,
-    case_type varchar(15) not null,
-    creation_date date not null,
-    eta_date date null,
-    ns_date date null,
-    ns_note varchar(50) null,
-    firm varchar(50) not null
+    id               int auto_increment primary key,
+    title            varchar(100) not null,
+    responsible_user int          null,
+    foreign key (responsible_user) references users (id),
+    requester_user   int          null,
+    foreign key (requester_user) references users (id),
+    body_text        varchar(500) not null,
+    state            varchar(15)  not null,
+    priority         varchar(15)  not null,
+    case_type        varchar(15)  not null,
+    creation_date    date         not null,
+    eta_date         date         null,
+    ns_date          date         null,
+    ns_note          varchar(50)  null,
+    firm             varchar(50)  not null
 );
 
 create table if not exists comments
 (
-    id int primary key auto_increment,
-    ticket int not null,
-    foreign key (ticket) references tickets(id),
-    author int not null,
-    foreign key (author) references users(id),
-    body_text varchar(300) not null,
-    creation_date date not null
+    id            int primary key auto_increment,
+    ticket        int          not null,
+    foreign key (ticket) references tickets (id),
+    author        int          not null,
+    foreign key (author) references users (id),
+    body_text     varchar(300) not null,
+    creation_date date         not null
 );
 
 create table if not exists permissions
@@ -108,3 +108,26 @@ values ((
             from permissions
             where permission = 'VIEW_SALES'
         ));
+
+/*insert into tickets (title, responsible_user, requester_user, body_text, state, priority, case_type, creation_date,
+                     eta_date, ns_date, ns_note, firm)
+values ('My CSS is broken!',
+        (
+            select id
+            from users
+            where login = 'support'
+        ),
+        (
+            select id
+            from users
+            where login = 'sales'
+        ),
+        'Bro the CSS is all messed up what the hell',
+        'NEW',
+        'HIGH',
+        'BUG',
+        '2020-05-01',
+        '2020-05-01',
+        '2020-05-01',
+        'bruh',
+        'Invasystems');*/

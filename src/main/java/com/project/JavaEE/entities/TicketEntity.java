@@ -3,10 +3,9 @@ package com.project.JavaEE.entities;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,11 +27,11 @@ public class TicketEntity {
 
     @ManyToOne
     @JoinColumn(name = "responsible_user")
-    private UserEntity responsible_user;
+    private UserEntity responsibleUser;
 
     @ManyToOne
     @JoinColumn(name = "requester_user")
-    private UserEntity requester_user;
+    private UserEntity requesterUser;
 
     @OneToMany(mappedBy = "ticket")
     private Set<CommentEntity> comments;
