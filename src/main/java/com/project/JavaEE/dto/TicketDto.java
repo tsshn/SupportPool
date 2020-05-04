@@ -28,16 +28,13 @@ public class TicketDto {
     private String bodyText;
 
     @NotEmpty(message = "State cannot be empty")
-    private State state;
+    private String state;
 
     @NotEmpty(message = "Priority cannot be empty")
-    private Priority priority;
+    private String priority;
 
     @NotEmpty(message = "Case cannot be empty")
-    private Case caseType;
-
-    @NotEmpty(message = "Creation date cannot be empty")
-    private Date creationDate;
+    private String caseType;
 
     @NotEmpty(message = "Firm cannot be empty")
     private String firm;

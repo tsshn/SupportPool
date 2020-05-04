@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -27,31 +28,31 @@ public class TicketService {
     private final UserRepository userRepository;
 
     @Transactional
-    public TicketEntity createTicket(String title, String body_text, State state,
-                                     Priority priority, Case caseType, Date creationDate, String firm) {
+    public TicketEntity createTicket(String title, String body_text, String state,
+                                     String priority, String caseType, String firm) {
         final TicketEntity ticket = new TicketEntity();
         ticket.setTitle(title);
         ticket.setBodyText(body_text);
-        ticket.setState(state);
-        ticket.setPriority(priority);
-        ticket.setCaseType(caseType);
-        ticket.setCreationDate(creationDate);
+        ticket.setState(State.valueOf(state));
+        ticket.setPriority(Priority.valueOf(priority));
+        ticket.setCaseType(Case.valueOf(caseType));
+        ticket.setCreationDate(LocalDateTime.now());
         ticket.setFirm(firm);
         ticket.setComments(new HashSet<>());
+        System.out.println(ticket);
         return ticketRepository.saveAndFlush(ticket);
     }
 
     @Transactional
-    public TicketEntity updateTicket(Integer ticketId, String title, String body_text, State state,
-                                     Priority priority, Case caseType, Date creationDate, String firm) throws EntityNotFoundException {
+    public TicketEntity updateTicket(Integer ticketId, String title, String bodyText, String state,
+                                     String priority, String caseType, String firm) throws EntityNotFoundException {
         final TicketEntity ticket = ticketRepository.get(ticketId)
                 .orElseThrow(() -> new EntityNotFoundException("Ticket with id \"" + ticketId + "\" was not found"));
         ticket.setTitle(title);
-        ticket.setBodyText(body_text);
-        ticket.setState(state);
-        ticket.setPriority(priority);
-        ticket.setCaseType(caseType);
-        ticket.setCreationDate(creationDate);
+        ticket.setBodyText(bodyText);
+        ticket.setState(State.valueOf(state));
+        ticket.setPriority(Priority.valueOf(priority));
+        ticket.setCaseType(Case.valueOf(caseType));
         ticket.setFirm(firm);
         return ticketRepository.saveAndFlush(ticket);
     }
@@ -109,8 +110,8 @@ public class TicketService {
                 Priority priority = Priority.values()[Integer.parseInt(query)];
                 return getByPriority(priority);
             case "case":
-                Case casetype = Case.values()[Integer.parseInt(query)];
-                return getByCase(casetype);
+                Case caseType = Case.values()[Integer.parseInt(query)];
+                return getByCase(caseType);
             default:
                 return getAll();
         }

@@ -33,11 +33,10 @@ public class TicketController {
     }
 
     @PostMapping(value = "/update-ticket/{ticketId}")
-    public void update(@PathVariable("ticketId") Integer ticketId,
-                       @Valid @RequestBody final TicketDto ticketModel) {
+    public void update(@PathVariable("ticketId") Integer ticketId, @Valid @RequestBody final TicketDto ticketModel) {
         ticketService.updateTicket(ticketId, ticketModel.getTitle(), ticketModel.getBodyText(),
                 ticketModel.getState(), ticketModel.getPriority(),
-                ticketModel.getCaseType(), ticketModel.getCreationDate(), ticketModel.getFirm());
+                ticketModel.getCaseType(), ticketModel.getFirm());
     }
 
     @PreAuthorize("hasAuthority('VIEW_SALES')")
@@ -45,7 +44,7 @@ public class TicketController {
     public void create(@Valid @RequestBody final TicketDto ticketModel) {
         TicketEntity newTicket = ticketService.createTicket(ticketModel.getTitle(), ticketModel.getBodyText(),
                 ticketModel.getState(), ticketModel.getPriority(),
-                ticketModel.getCaseType(), ticketModel.getCreationDate(), ticketModel.getFirm());
+                ticketModel.getCaseType(), ticketModel.getFirm());
     }
 
     @PostMapping(value = "/filterTickets")

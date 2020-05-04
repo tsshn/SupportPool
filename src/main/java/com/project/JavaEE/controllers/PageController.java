@@ -40,4 +40,9 @@ public class PageController {
         return "ticket";
     }
 
+    @RequestMapping(value = "/ticket")
+    public String newTicket() {
+        return "newTicket";
+    }
+
 }
