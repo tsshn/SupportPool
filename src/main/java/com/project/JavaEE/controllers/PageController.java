@@ -34,12 +34,14 @@ public class PageController {
         return "team";
     }
 
+    @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(value = "/ticket/{id}")
     public String ticket(@PathVariable("id") int id, Model model) {
         model.addAttribute("ticket", ticketService.getById(id));
         return "ticket";
     }
 
+    @PreAuthorize("hasAuthority('VIEW_SALES')")
     @RequestMapping(value = "/ticket")
     public String newTicket() {
         return "newTicket";
