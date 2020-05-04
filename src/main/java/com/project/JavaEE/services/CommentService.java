@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,7 +19,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public CommentEntity createComment(String bodyText, Date creationDate,
+    public CommentEntity createComment(String bodyText, LocalDateTime creationDate,
                                        TicketEntity ticket, UserEntity author) {
         final CommentEntity comment = new CommentEntity();
         comment.setBodyText(bodyText);

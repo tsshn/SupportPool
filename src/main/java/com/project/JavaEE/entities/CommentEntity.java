@@ -1,12 +1,11 @@
 package com.project.JavaEE.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -19,7 +18,7 @@ public class CommentEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @JsonManagedReference
+    //@JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "ticket")
     private TicketEntity ticket;
@@ -32,6 +31,6 @@ public class CommentEntity {
     private String bodyText;
 
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
 }

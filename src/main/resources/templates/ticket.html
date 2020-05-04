@@ -136,14 +136,14 @@
             url: `/ticket/${$ticketId}/comments`,
             success: function(response) {
                 console.log("success");
-                let $commentsHolder = $('#comments-holder');
-                    $commentsHolder.empty();
+                let $commentSubholder = $('#comment-subholder');
+                    $commentSubholder.empty();
                     response.forEach(comment => {
                         $.ajax({
                             url: `/ticket/${$ticketId}/comments`,
                             success: () => {
                                 let date = new Date(comment.creationDate);
-                                $commentsHolder.append('<div class="comment">' +
+                                $commentSubholder.append('<div class="comment">' +
                                                         '<div class="comment-timestamp">' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + '</div>' +
                                                         '<div class="comment-author">' + comment.author.login + '</div>' +
                                                         '<div class="comment-content">' + comment.bodyText + '</div>' +
