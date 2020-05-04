@@ -20,14 +20,21 @@
         <div class="sidebar-member workspace-label" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
                 class="sidebar-member-icon">📚</span>Workspace
         </div>
-        <div class="sidebar-member" th:if="${#authorization.expression('isFullyAuthenticated()')}"><a href="/pool"><span
-                class="sidebar-member-icon">🚨</span><span
-                class="sidebar-member-label">Support Pool</span></a></div>
-        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a
-                href="/team"><span class="sidebar-member-icon">🤝</span><span
-                class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member chosen"><a href="/login"><span class="sidebar-member-icon">🔑</span><span
-                class="sidebar-member-label">Login</span></a></div>
+        <a href="/pool">
+            <div class="sidebar-member" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
+                    class="sidebar-member-icon">🚨</span><span
+                    class="sidebar-member-label">Support Pool</span></div>
+        </a>
+        <a
+                href="/team">
+            <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><span
+                    class="sidebar-member-icon">🤝</span><span
+                    class="sidebar-member-label">Team</span></div>
+        </a>
+        <a href="/login">
+            <div class="sidebar-member chosen"><span class="sidebar-member-icon">🔑</span><span
+                    class="sidebar-member-label">Login</span></div>
+        </a>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
                     class="sidebar-member-label">Hi, <span class="username"></span></span></div>
