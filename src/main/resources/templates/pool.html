@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="../styles.css" rel="stylesheet"/>
-    <link href="../static/styles.css" rel="stylesheet"/>
+<!--    <link href="../static/styles.css" rel="stylesheet"/>-->
 
     <title>Pool</title>
 
@@ -123,18 +123,6 @@
         });
 
     })
-
-    $.ajax({
-            url: '/getLogin',
-            success: (response) => {
-                $users.append();
-                if (!(response === user.login))
-                    $users.append('<tr><td>' + user.login + '</td><td>' + permissions + '</td><td><button onclick="removeUser(' + user.id + ')" class="grid-button">Remove</button></td></tr>');
-                else
-                    $users.append('<tr><td>' + user.login + '</td><td>' + permissions + '</td><td><button disabled onclick="removeUser(' + user.id + ')" class="grid-button disabled-button">🔒</button></td></tr>');
-            }
-        }
-    )
 
     $.ajax({
             url: '/getLogin',

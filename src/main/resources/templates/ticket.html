@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="../styles.css" rel="stylesheet"/>
-    <link href="../static/styles.css" rel="stylesheet"/>
+    <!--    <link href="../static/styles.css" rel="stylesheet"/>-->
 
     <title>Ticket</title>
 
@@ -108,18 +108,14 @@
             <button style="margin-top: 10px;" id="save">Save</button>
 
             <div id="comments-holder" class="comments-holder">
-                <div id="comment-subholder">
-                    <div class="comment">
-                        <div class="comment-timestamp"></div>
-                        <div class="comment-author"></div>
-                        <div class="comment-content"></div>
-                    </div>
-                </div>
 
-                <div class="comment">
-                    <textarea id="newCommentInput" class="new-comment-textarea"></textarea>
+                <div id="comment-subholder"></div>
+
+                <div class="comment predefined-comment">
+                    <textarea spellcheck="false" id="newCommentInput" class="new-comment-textarea"></textarea>
                     <button id="addComment" style="margin-top: 10px;">Add Comment</button>
                 </div>
+
             </div>
 
         </div>
@@ -167,7 +163,7 @@
             e.preventDefault();
             $.ajax({
                 url: '/getLogin',
-                success: function(response) {
+                success: function (response) {
                     $.ajax({
                         type: 'POST',
                         url: '/add-comment',
@@ -181,6 +177,7 @@
                             xhr.setRequestHeader('Content-Type', 'application/json');
                         },
                         success: function (response) {
+                            $('#newCommentInput').val('');
                             let $commentSubholder = $('#comment-subholder');
                             $commentSubholder.empty();
                             response.forEach(comment => {
@@ -223,7 +220,7 @@
                     fill(response);
                 },
                 error: (error) => {
-                    if(error.statusText === "error") notify(false);
+                    if (error.statusText === "error") notify(false);
                     else notify(true);
                 }
             })
@@ -241,9 +238,9 @@
     function notify(successful) {
         console.log(successful);
         let saveButton = document.getElementById("save");
-        if(successful) {
+        if (successful) {
             saveButton.style.background = "rgba(77, 171, 154, 0.5)";
-        } else if(!successful) {
+        } else if (!successful) {
             saveButton.style.background = "rgba(255, 115, 105, 0.5)";
         }
         setTimeout(() => {

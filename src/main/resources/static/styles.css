@@ -278,6 +278,9 @@ select:hover {
     color: #2f3437;
     font-weight: 600;
     border: none;
+    display: inline-block;
+    min-width: 10px;
+    min-height: 10px;
     outline: none;
 }
 
@@ -347,6 +350,10 @@ select:hover {
     padding: 10px 0;
     margin-top: 20px;
     font-size: 14px;
+}
+
+.predefined-comment {
+    border-bottom: none;
 }
 
 .comment-timestamp, .comment-author {
