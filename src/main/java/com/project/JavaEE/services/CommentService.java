@@ -19,11 +19,11 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public CommentEntity createComment(String bodyText, LocalDateTime creationDate,
+    public CommentEntity createComment(String bodyText,
                                        TicketEntity ticket, UserEntity author) {
         final CommentEntity comment = new CommentEntity();
         comment.setBodyText(bodyText);
-        comment.setCreationDate(creationDate);
+        comment.setCreationDate(LocalDateTime.now());
         comment.setTicket(ticket);
         comment.setAuthor(author);
         return commentRepository.saveAndFlush(comment);

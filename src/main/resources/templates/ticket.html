@@ -117,8 +117,8 @@
                 </div>
 
                 <div class="comment">
-                    <textarea class="new-comment-textarea"></textarea>
-                    <button style="margin-top: 10px;">Add Comment</button>
+                    <textarea id="newCommentInput" class="new-comment-textarea"></textarea>
+                    <button id="addComment" style="margin-top: 10px;">Add Comment</button>
                 </div>
             </div>
 
@@ -162,6 +162,46 @@
                 })
             }
         })
+
+        $('#addComment').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/getLogin',
+                success: function(response) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add-comment',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            ticketId: $ticketId,
+                            authorUsername: response,
+                            bodyText: $('#newCommentInput').val()
+                        }),
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+                        },
+                        success: function (response) {
+                            let $commentSubholder = $('#comment-subholder');
+                            $commentSubholder.empty();
+                            response.forEach(comment => {
+                                $.ajax({
+                                    url: `/ticket/${$ticketId}/comments`,
+                                    success: () => {
+                                        let date = new Date(comment.creationDate);
+                                        $commentSubholder.append('<div class="comment">' +
+                                            '<div class="comment-timestamp">' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + '</div>' +
+                                            '<div class="comment-author">' + comment.author.login + '</div>' +
+                                            '<div class="comment-content">' + comment.bodyText + '</div>' +
+                                            '</div>');
+                                    }
+                                })
+                            })
+                        }
+                    })
+                }
+            })
+        })
+
         $('#save').click(function (e) {
             e.preventDefault();
             $.ajax({
