@@ -77,7 +77,7 @@
                 </tbody>
             </table>
 
-            <div class="bottom-toolbar">
+            <div class="bottom-toolbar" th:if="${#authorization.expression('hasAuthority(''VIEW_SALES'')')}">
                 <button id="add-ticket">Add</button>
             </div>
 

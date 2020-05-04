@@ -41,10 +41,11 @@ public class TicketController {
 
     @PreAuthorize("hasAuthority('VIEW_SALES')")
     @PostMapping(value = "/create-ticket")
-    public void create(@Valid @RequestBody final TicketDto ticketModel) {
+    public Integer create(@Valid @RequestBody final TicketDto ticketModel) {
         TicketEntity newTicket = ticketService.createTicket(ticketModel.getTitle(), ticketModel.getBodyText(),
                 ticketModel.getState(), ticketModel.getPriority(),
                 ticketModel.getCaseType(), ticketModel.getFirm());
+        return newTicket.getId();
     }
 
     @PostMapping(value = "/filterTickets")

@@ -142,9 +142,10 @@
                     xhr.setRequestHeader('Content-Type', 'application/json');
                 },
                 success: function (response) {
-                    console.log("Success")
-                    console.log(response);
-                }
+                    notify(true);
+                    window.location.href = window.location.origin + `/ticket/${response}`;
+                },
+                error: () => (notify(false))
             })
         });
 
@@ -164,6 +165,19 @@
         $loginIcon.empty();
         data === "Stranger" ? $loginIcon.append("🔐") : $loginIcon.append("🔓");
         $login.append(data);
+    }
+
+    function notify(successful) {
+        console.log(successful);
+        let saveButton = document.getElementById("save");
+        if(successful) {
+            saveButton.style.background = "rgba(77, 171, 154, 0.5)";
+        } else if(!successful) {
+            saveButton.style.background = "rgba(255, 115, 105, 0.5)";
+        }
+        setTimeout(() => {
+            saveButton.style.background = "rgb(46, 170, 220)";
+        }, 500);
     }
 
 </script>

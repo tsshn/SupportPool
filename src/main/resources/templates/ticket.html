@@ -145,7 +145,6 @@
         $.ajax({
             url: `/ticket/${$ticketId}/comments`,
             success: function (response) {
-                console.log("success");
                 let $commentSubholder = $('#comment-subholder');
                 $commentSubholder.empty();
                 response.forEach(comment => {
@@ -182,6 +181,10 @@
                 },
                 success: function (response) {
                     fill(response);
+                },
+                error: (error) => {
+                    if(error.statusText === "error") notify(false);
+                    else notify(true);
                 }
             })
         });
@@ -195,8 +198,20 @@
 
     });
 
+    function notify(successful) {
+        console.log(successful);
+        let saveButton = document.getElementById("save");
+        if(successful) {
+            saveButton.style.background = "rgba(77, 171, 154, 0.5)";
+        } else if(!successful) {
+            saveButton.style.background = "rgba(255, 115, 105, 0.5)";
+        }
+        setTimeout(() => {
+            saveButton.style.background = "rgb(46, 170, 220)";
+        }, 500);
+    }
+
     function fill(data) {
-        console.log(data);
         $('#state').val(data.state);
         $('#priority').val(data.priority);
         $('#case').val(data.caseType);
