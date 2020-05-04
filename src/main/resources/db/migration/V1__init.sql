@@ -7,21 +7,17 @@ create table if not exists users
 
 create table if not exists tickets
 (
-    id               int auto_increment primary key,
-    title            varchar(100) not null,
-    responsible_user int          null,
-    foreign key (responsible_user) references users (id),
-    requester_user   int          null,
-    foreign key (requester_user) references users (id),
-    body_text        varchar(500) not null,
-    state            varchar(15)  not null,
-    priority         varchar(15)  not null,
-    case_type        varchar(15)  not null,
-    creation_date    date         not null,
-    eta_date         date         null,
-    ns_date          date         null,
-    ns_note          varchar(50)  null,
-    firm             varchar(50)  not null
+    id            int auto_increment primary key,
+    title         varchar(100) not null,
+    body_text     varchar(500) not null,
+    state         varchar(15)  not null,
+    priority      varchar(15)  not null,
+    case_type     varchar(15)  not null,
+    creation_date date         not null,
+    eta_date      date         null,
+    ns_date       date         null,
+    ns_note       varchar(50)  null,
+    firm          varchar(50)  not null
 );
 
 create table if not exists comments
@@ -48,22 +44,6 @@ create table if not exists user_to_permissions
     constraint fk_user_to_permission_user foreign key (user_id) references users (id),
     constraint fk_user_to_permission_permission foreign key (permission_id) references permissions (id)
 );
-
-/*create table responsible_user_to_tickets
-(
-    user_id int not null,
-    ticket_id int not null,
-    constraint fk_responsible_user_to_tickets_user foreign key (user_id) references users (id),
-    constraint fk_responsible_user_to_tickets_ticket foreign key (ticket_id) references tickets (id)
-);
-
-create table requester_user_to_tickets
-(
-    user_id int not null,
-    ticket_id int not null,
-    constraint fk_requester_user_to_tickets_user foreign key (user_id) references users (id),
-    constraint fk_requester_user_to_tickets_ticket foreign key (ticket_id) references tickets (id)
-);*/
 
 insert into users (login, password)
 values ('admin', 'password'),
@@ -109,19 +89,9 @@ values ((
             where permission = 'VIEW_SALES'
         ));
 
-insert into tickets (title, responsible_user, requester_user, body_text, state, priority, case_type, creation_date,
+insert into tickets (title, body_text, state, priority, case_type, creation_date,
                      eta_date, ns_date, ns_note, firm)
 values ('My CSS is broken!',
-        (
-            select id
-            from users
-            where login = 'support'
-        ),
-        (
-            select id
-            from users
-            where login = 'sales'
-        ),
         'Bro the CSS is all messed up what the hell',
         'OPEN',
         'LOW',

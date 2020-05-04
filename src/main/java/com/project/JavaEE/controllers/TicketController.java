@@ -1,8 +1,7 @@
 package com.project.JavaEE.controllers;
 
-import com.project.JavaEE.dto.TicketDto;
 import com.project.JavaEE.dto.FilterDto;
-import com.project.JavaEE.dto.UserDto;
+import com.project.JavaEE.dto.TicketDto;
 import com.project.JavaEE.entities.CommentEntity;
 import com.project.JavaEE.entities.TicketEntity;
 import com.project.JavaEE.entities.UserDetails;
@@ -48,30 +47,18 @@ public class TicketController {
 
     @PostMapping(value = "/update-ticket/{ticketId}")
     public void update(@PathVariable("ticketId") Integer ticketId,
-                       @Valid @RequestBody final TicketDto ticketModel,
-                       @Valid @RequestBody final UserDto respUserModel,
-                       @Valid @RequestBody final UserDto reqUserModel) {
+                       @Valid @RequestBody final TicketDto ticketModel) {
         ticketService.updateTicket(ticketId, ticketModel.getTitle(), ticketModel.getBodyText(),
-                                ticketModel.getState(), ticketModel.getPriority(),
-                                ticketModel.getCaseType(), ticketModel.getCreationDate(),
-                                ticketModel.getEtaDate(), ticketModel.getNextStepDate(),
-                                ticketModel.getNextStepNote(), ticketModel.getFirm());
-        userService.addTicket(respUserModel.getLogin(), "responsible", ticketId);
-        userService.addTicket(reqUserModel.getLogin(), "requester", ticketId);
+                ticketModel.getState(), ticketModel.getPriority(),
+                ticketModel.getCaseType(), ticketModel.getCreationDate(), ticketModel.getFirm());
     }
 
     @PreAuthorize("hasAuthority('VIEW_SALES')")
     @PostMapping(value = "/create-ticket")
-    public void create(@Valid @RequestBody final TicketDto ticketModel,
-                       @Valid @RequestBody final UserDto respUserModel,
-                       @Valid @RequestBody final UserDto reqUserModel) {
+    public void create(@Valid @RequestBody final TicketDto ticketModel) {
         TicketEntity newTicket = ticketService.createTicket(ticketModel.getTitle(), ticketModel.getBodyText(),
-                                ticketModel.getState(), ticketModel.getPriority(),
-                                ticketModel.getCaseType(), ticketModel.getCreationDate(),
-                                ticketModel.getEtaDate(), ticketModel.getNextStepDate(),
-                                ticketModel.getNextStepNote(), ticketModel.getFirm());
-        userService.addTicket(respUserModel.getLogin(), "responsible", newTicket.getId());
-        userService.addTicket(reqUserModel.getLogin(), "requester", newTicket.getId());
+                ticketModel.getState(), ticketModel.getPriority(),
+                ticketModel.getCaseType(), ticketModel.getCreationDate(), ticketModel.getFirm());
     }
 
     @PostMapping(value = "/filterTickets")

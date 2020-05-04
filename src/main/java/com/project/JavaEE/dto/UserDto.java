@@ -1,12 +1,12 @@
 package com.project.JavaEE.dto;
 
-import com.project.JavaEE.entities.PermissionEntity;
-import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Empty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 @Setter
 @Getter

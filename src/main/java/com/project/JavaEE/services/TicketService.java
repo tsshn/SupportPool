@@ -28,9 +28,7 @@ public class TicketService {
 
     @Transactional
     public TicketEntity createTicket(String title, String body_text, State state,
-                                     Priority priority, Case caseType, Date creationDate,
-                                     Date etaDate, Date nextStepDate,
-                                     String nextStepNote, String firm) {
+                                     Priority priority, Case caseType, Date creationDate, String firm) {
         final TicketEntity ticket = new TicketEntity();
         ticket.setTitle(title);
         ticket.setBodyText(body_text);
@@ -38,9 +36,6 @@ public class TicketService {
         ticket.setPriority(priority);
         ticket.setCaseType(caseType);
         ticket.setCreationDate(creationDate);
-        ticket.setEtaDate(etaDate);
-        ticket.setNextStepDate(nextStepDate);
-        ticket.setNextStepNote(nextStepNote);
         ticket.setFirm(firm);
         ticket.setComments(new HashSet<>());
         return ticketRepository.saveAndFlush(ticket);
@@ -48,8 +43,7 @@ public class TicketService {
 
     @Transactional
     public TicketEntity updateTicket(Integer ticketId, String title, String body_text, State state,
-                                     Priority priority, Case caseType, Date creationDate,
-                                     Date etaDate, Date nextStepDate, String nextStepNote, String firm) throws EntityNotFoundException {
+                                     Priority priority, Case caseType, Date creationDate, String firm) throws EntityNotFoundException {
         final TicketEntity ticket = ticketRepository.get(ticketId)
                 .orElseThrow(() -> new EntityNotFoundException("Ticket with id \"" + ticketId + "\" was not found"));
         ticket.setTitle(title);
@@ -58,11 +52,7 @@ public class TicketService {
         ticket.setPriority(priority);
         ticket.setCaseType(caseType);
         ticket.setCreationDate(creationDate);
-        ticket.setEtaDate(etaDate);
-        ticket.setNextStepDate(nextStepDate);
-        ticket.setNextStepNote(nextStepNote);
         ticket.setFirm(firm);
-        //ticket.setComments(new HashSet<>());
         return ticketRepository.saveAndFlush(ticket);
     }
 
@@ -75,8 +65,8 @@ public class TicketService {
 
     @Transactional
     public TicketEntity addComment(final Integer commentId,
-                                    final String username,
-                                    final Integer ticketId) {
+                                   final String username,
+                                   final Integer ticketId) {
 
         final TicketEntity ticket = ticketRepository.get(ticketId)
                 .orElseThrow(() -> new EntityNotFoundException("Ticket with id " + ticketId + " not found"));
@@ -132,17 +122,27 @@ public class TicketService {
     }
 
     @Transactional
-    public List<TicketEntity> getByTitle(String title) { return ticketRepository.findByTitle('%' + title + '%'); }
+    public List<TicketEntity> getByTitle(String title) {
+        return ticketRepository.findByTitle('%' + title + '%');
+    }
 
     @Transactional
-    public List<TicketEntity> getByState(State state) { return ticketRepository.findByState(state); }
+    public List<TicketEntity> getByState(State state) {
+        return ticketRepository.findByState(state);
+    }
 
     @Transactional
-    public List<TicketEntity> getByCase(Case caseType) { return ticketRepository.findByCase(caseType); }
+    public List<TicketEntity> getByCase(Case caseType) {
+        return ticketRepository.findByCase(caseType);
+    }
 
     @Transactional
-    public List<TicketEntity> getByFirm(String firm) { return ticketRepository.findByFirm('%' + firm + '%'); }
+    public List<TicketEntity> getByFirm(String firm) {
+        return ticketRepository.findByFirm('%' + firm + '%');
+    }
 
     @Transactional
-    public List<TicketEntity> getByPriority(Priority priority) { return ticketRepository.findByPriority(priority); }
+    public List<TicketEntity> getByPriority(Priority priority) {
+        return ticketRepository.findByPriority(priority);
+    }
 }

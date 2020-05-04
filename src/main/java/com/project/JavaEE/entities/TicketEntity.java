@@ -1,10 +1,8 @@
 package com.project.JavaEE.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
-
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -26,16 +24,6 @@ public class TicketEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "responsible_user")
-    private UserEntity responsibleUser;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "requester_user")
-    private UserEntity requesterUser;
-
     @OneToMany(mappedBy = "ticket")
     private Set<CommentEntity> comments;
 
@@ -56,15 +44,6 @@ public class TicketEntity {
 
     @Column(name = "creation_date")
     private Date creationDate;
-
-    @Column(name = "eta_date")
-    private Date etaDate;
-
-    @Column(name = "ns_date")
-    private Date nextStepDate;
-
-    @Column(name = "ns_note")
-    private String nextStepNote;
 
     @Column(name = "firm", nullable = false)
     private String firm;

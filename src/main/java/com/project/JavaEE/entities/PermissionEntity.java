@@ -1,9 +1,10 @@
 package com.project.JavaEE.entities;
 
 import com.project.JavaEE.entities.type.Permission;
-
-import lombok.*;
-import org.hibernate.validator.constraints.pl.REGON;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
