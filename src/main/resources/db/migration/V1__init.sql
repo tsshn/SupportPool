@@ -13,10 +13,7 @@ create table if not exists tickets
     state         varchar(15)  not null,
     priority      varchar(15)  not null,
     case_type     varchar(15)  not null,
-    creation_date date         not null,
-    eta_date      date         null,
-    ns_date       date         null,
-    ns_note       varchar(50)  null,
+    creation_date datetime         not null,
     firm          varchar(50)  not null
 );
 
@@ -89,15 +86,11 @@ values ((
             where permission = 'VIEW_SALES'
         ));
 
-insert into tickets (title, body_text, state, priority, case_type, creation_date,
-                     eta_date, ns_date, ns_note, firm)
+insert into tickets (title, body_text, state, priority, case_type, creation_date, firm)
 values ('My CSS is broken!',
         'Bro the CSS is all messed up what the hell',
         'OPEN',
         'LOW',
         'FEATURE',
         '2020-05-01',
-        '2020-05-01',
-        '2020-05-01',
-        'bruh',
         'Invasystems');

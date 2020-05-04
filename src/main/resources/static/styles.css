@@ -277,6 +277,8 @@ select:hover {
     background: rgba(255, 220, 73, 0.5);
     color: #2f3437;
     font-weight: 600;
+    border: none;
+    outline: none;
 }
 
 .property {

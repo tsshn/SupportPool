@@ -35,7 +35,7 @@
 
         <div class="sub-container">
 
-            <div class="sub-container-title">🎫 Ticket <span id="ticketId" th:text="${ticket.id}"></span></div>
+            <div class="sub-container-title">🎫 Ticket <span id="ticketId"></span></div>
 
             <div class="properties-holder">
 
@@ -93,24 +93,9 @@
             </div>
 
             <div class="ticket-content-holder">
-                <span spellcheck="false" contenteditable="true" id="body-text" class="highlight"></span>
+                <span spellcheck="false" contenteditable="true" id="body-text" class="highlight">Paste description</span>
             </div>
-            <button style="margin-top: 10px;" id="save">Save</button>
-
-            <div id="comments-holder" class="comments-holder">
-                <div id="comment-subholder">
-                    <div class="comment">
-                        <div class="comment-timestamp"></div>
-                        <div class="comment-author"></div>
-                        <div class="comment-content"></div>
-                    </div>
-                </div>
-
-                <div class="comment">
-                    <textarea class="new-comment-textarea"></textarea>
-                    <button style="margin-top: 10px;">Add Comment</button>
-                </div>
-            </div>
+            <button style="margin-top: 10px;" id="save">Add ticket</button>
 
         </div>
 
@@ -123,20 +108,16 @@
 <script>
 
     $(function () {
-
-        let $ticketId = $('#ticketId').text();
-
-        $.ajax({
-                url: `/getTicket/${$ticketId}`,
-                success: (response) => (fill(response))
-            }
-        )
-
+        let date = new Date();
+        let dateField = $('#date');
+        dateField.empty();
+        dateField.append(`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`);
+        
         $('#save').click(function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'POST',
-                url: `/update-ticket/${$ticketId}`,
+                url: `/create-ticket`,
                 dataType: 'json',
                 data: JSON.stringify({
                     title: $('#title').text(),
@@ -150,36 +131,11 @@
                     xhr.setRequestHeader('Content-Type', 'application/json');
                 },
                 success: function (response) {
-                    fill(response);
+                    console.log(response);
                 }
             })
         });
-
     });
-
-    function fill(data) {
-        console.log(data);
-        $('#state').val(data.state);
-        $('#priority').val(data.priority);
-        $('#case').val(data.caseType);
-
-        let date = new Date(data.creationDate);
-        let dateField = $('#date');
-        dateField.empty();
-        dateField.append(`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`);
-
-        let title = $('#title');
-        title.empty();
-        title.append(data.title);
-
-        let firm = $('#firm');
-        firm.empty();
-        firm.append(data.firm);
-
-        let bodyText = $('#body-text');
-        bodyText.empty();
-        bodyText.append(data.bodyText);
-    }
 
 </script>
 
