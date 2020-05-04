@@ -19,6 +19,8 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+
+
     @GetMapping(value = "/ticket/{ticketId}/comments")
     public List<CommentEntity> getTicketComments(@PathVariable("ticketId") Integer ticketId) {
         return commentService.getByTicketId(ticketId);

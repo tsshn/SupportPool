@@ -119,11 +119,7 @@
         });
 
         $('#add-ticket').click(function () {
-            console.log("clicked");
-            $.ajax({
-                type: 'GET',
-                url: '/ticket'
-            })
+            window.location.href = window.location.origin + "/ticket";
         });
 
     })
