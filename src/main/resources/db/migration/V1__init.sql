@@ -13,7 +13,7 @@ create table if not exists tickets
     state         varchar(15)  not null,
     priority      varchar(15)  not null,
     case_type     varchar(15)  not null,
-    creation_date datetime         not null,
+    creation_date datetime     not null,
     firm          varchar(50)  not null
 );
 
@@ -25,7 +25,7 @@ create table if not exists comments
     author        int          not null,
     foreign key (author) references users (id),
     body_text     varchar(300) not null,
-    creation_date datetime         not null
+    creation_date datetime     not null
 );
 
 create table if not exists permissions
@@ -92,8 +92,8 @@ values ('My CSS is broken!',
         'OPEN',
         'LOW',
         'FEATURE',
-        '2020-05-01',
+        '2020-05-03T12:45:30',
         'Invasystems');
 
 insert into comments (ticket, author, body_text, creation_date)
-values (1, 3, 'No I think its fine', '2020-05-02');
+values (1, 3, 'No I think its fine', '2020-05-03T15:14:23');

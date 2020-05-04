@@ -17,17 +17,27 @@
 <div class="container">
 
     <div class="sidebar">
-        <div class="sidebar-member workspace-label"><span class="sidebar-member-icon">📚</span>Workspace Name</div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🚨</span><span
-                class="sidebar-member-label">Support Pool</span></a></div>
-        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a
-                href="#"><span class="sidebar-member-icon">🤝</span><span
-                class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member"><a href="#"><span class="sidebar-member-icon">🔑</span><span
-                class="sidebar-member-label">Login</span></a></div>
+        <div class="sidebar-member workspace-label" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
+                class="sidebar-member-icon">📚</span>Workspace
+        </div>
+        <a href="/pool">
+            <div class="sidebar-member" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
+                    class="sidebar-member-icon">🚨</span><span
+                    class="sidebar-member-label">Support Pool</span></div>
+        </a>
+        <a
+                href="/team">
+            <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><span
+                    class="sidebar-member-icon">🤝</span><span
+                    class="sidebar-member-label">Team</span></div>
+        </a>
+        <a href="/login">
+            <div class="sidebar-member"><span class="sidebar-member-icon">🔑</span><span
+                    class="sidebar-member-label">Login</span></div>
+        </a>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
-                    class="sidebar-member-label">Hi, User Name</span></div>
+                    class="sidebar-member-label">Hi, <span class="username"></span></span></div>
         </div>
     </div>
 
@@ -127,30 +137,29 @@
         let $ticketId = $('#ticketId').text();
 
         $.ajax({
-            url: `/getTicket/${$ticketId}`,
-            success: (response) => (fill(response))
+                url: `/getTicket/${$ticketId}`,
+                success: (response) => (fill(response))
             }
         )
 
         $.ajax({
             url: `/ticket/${$ticketId}/comments`,
-            success: function(response) {
-                console.log("success");
+            success: function (response) {
                 let $commentSubholder = $('#comment-subholder');
-                    $commentSubholder.empty();
-                    response.forEach(comment => {
-                        $.ajax({
-                            url: `/ticket/${$ticketId}/comments`,
-                            success: () => {
-                                let date = new Date(comment.creationDate);
-                                $commentSubholder.append('<div class="comment">' +
-                                                        '<div class="comment-timestamp">' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + '</div>' +
-                                                        '<div class="comment-author">' + comment.author.login + '</div>' +
-                                                        '<div class="comment-content">' + comment.bodyText + '</div>' +
-                                                       '</div>');
-                            }
-                        })
+                $commentSubholder.empty();
+                response.forEach(comment => {
+                    $.ajax({
+                        url: `/ticket/${$ticketId}/comments`,
+                        success: () => {
+                            let date = new Date(comment.creationDate);
+                            $commentSubholder.append('<div class="comment">' +
+                                '<div class="comment-timestamp">' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + '</div>' +
+                                '<div class="comment-author">' + comment.author.login + '</div>' +
+                                '<div class="comment-content">' + comment.bodyText + '</div>' +
+                                '</div>');
+                        }
                     })
+                })
             }
         })
 
@@ -212,14 +221,37 @@
                 },
                 success: function (response) {
                     fill(response);
+                },
+                error: (error) => {
+                    if(error.statusText === "error") notify(false);
+                    else notify(true);
                 }
             })
         });
 
+        $.ajax({
+                url: '/getLogin',
+                success: (response) => (fillLogin(response)),
+                error: () => fillLogin("Stranger")
+            }
+        )
+
     });
 
+    function notify(successful) {
+        console.log(successful);
+        let saveButton = document.getElementById("save");
+        if(successful) {
+            saveButton.style.background = "rgba(77, 171, 154, 0.5)";
+        } else if(!successful) {
+            saveButton.style.background = "rgba(255, 115, 105, 0.5)";
+        }
+        setTimeout(() => {
+            saveButton.style.background = "rgb(46, 170, 220)";
+        }, 500);
+    }
+
     function fill(data) {
-        console.log(data);
         $('#state').val(data.state);
         $('#priority').val(data.priority);
         $('#case').val(data.caseType);
@@ -240,6 +272,15 @@
         let bodyText = $('#body-text');
         bodyText.empty();
         bodyText.append(data.bodyText);
+    }
+
+    function fillLogin(data) {
+        let $login = $('.username');
+        let $loginIcon = $('.login-icon');
+        $login.empty();
+        $loginIcon.empty();
+        data === "Stranger" ? $loginIcon.append("🔐") : $loginIcon.append("🔓");
+        $login.append(data);
     }
 
 </script>

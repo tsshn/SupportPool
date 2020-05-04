@@ -17,17 +17,27 @@
 <div class="container">
 
     <div class="sidebar">
-        <div class="sidebar-member workspace-label"><span class="sidebar-member-icon">📚</span>Workspace Name</div>
-        <div class="sidebar-member chosen"><a href="/pool"><span class="sidebar-member-icon">🚨</span><span
-                class="sidebar-member-label">Support Pool</span></a></div>
-        <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><a
-                href="/team"><span class="sidebar-member-icon">🤝</span><span
-                class="sidebar-member-label">Team</span></a></div>
-        <div class="sidebar-member"><a href="/login"><span class="sidebar-member-icon">🔑</span><span
-                class="sidebar-member-label">Login</span></a></div>
+        <div class="sidebar-member workspace-label" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
+                class="sidebar-member-icon">📚</span>Workspace
+        </div>
+        <a href="/pool">
+            <div class="sidebar-member chosen" th:if="${#authorization.expression('isFullyAuthenticated()')}"><span
+                    class="sidebar-member-icon">🚨</span><span
+                    class="sidebar-member-label">Support Pool</span></div>
+        </a>
+        <a
+                href="/team">
+            <div class="sidebar-member" th:if="${#authorization.expression('hasAuthority(''VIEW_ADMIN'')')}"><span
+                    class="sidebar-member-icon">🤝</span><span
+                    class="sidebar-member-label">Team</span></div>
+        </a>
+        <a href="/login">
+            <div class="sidebar-member"><span class="sidebar-member-icon">🔑</span><span
+                    class="sidebar-member-label">Login</span></div>
+        </a>
         <div class="sidebar-user-label">
             <div class="sidebar-member"><span class="sidebar-member-icon">👋</span><span
-                    class="sidebar-member-label">Hi, User Name</span></div>
+                    class="sidebar-member-label">Hi, <span class="username"></span></span></div>
         </div>
     </div>
 
@@ -67,7 +77,7 @@
                 </tbody>
             </table>
 
-            <div class="bottom-toolbar">
+            <div class="bottom-toolbar" th:if="${#authorization.expression('hasAuthority(''VIEW_SALES'')')}">
                 <button id="add-ticket">Add</button>
             </div>
 
@@ -109,11 +119,29 @@
         });
 
         $('#add-ticket').click(function () {
-            console.log("clicked");
             window.location.href = window.location.origin + "/ticket";
         });
 
     })
+
+    $.ajax({
+            url: '/getLogin',
+            success: (response) => {
+                $users.append();
+                if (!(response === user.login))
+                    $users.append('<tr><td>' + user.login + '</td><td>' + permissions + '</td><td><button onclick="removeUser(' + user.id + ')" class="grid-button">Remove</button></td></tr>');
+                else
+                    $users.append('<tr><td>' + user.login + '</td><td>' + permissions + '</td><td><button disabled onclick="removeUser(' + user.id + ')" class="grid-button disabled-button">🔒</button></td></tr>');
+            }
+        }
+    )
+
+    $.ajax({
+            url: '/getLogin',
+            success: (response) => (fillLogin(response)),
+            error: () => fillLogin("Stranger")
+        }
+    )
 
     function fillTicketGrid(data) {
         let $ticketGrid = $('#tickets-grid');
@@ -147,6 +175,15 @@
                 console.log(response);
             }
         })
+    }
+
+    function fillLogin(data) {
+        let $login = $('.username');
+        let $loginIcon = $('.login-icon');
+        $login.empty();
+        $loginIcon.empty();
+        data === "Stranger" ? $loginIcon.append("🔐") : $loginIcon.append("🔓");
+        $login.append(data);
     }
 
 </script>
