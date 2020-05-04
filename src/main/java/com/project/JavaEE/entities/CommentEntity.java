@@ -1,5 +1,7 @@
 package com.project.JavaEE.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ public class CommentEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "ticket")
     private TicketEntity ticket;
