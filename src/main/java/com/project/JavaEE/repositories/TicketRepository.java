@@ -17,7 +17,7 @@ public interface TicketRepository extends JpaRepository<TicketEntity, Integer> {
 
     @Query("SELECT t " +
             "FROM TicketEntity t " +
-            "LEFT JOIN FETCH t.comments " +
+//            "LEFT JOIN FETCH t.comments " +
             "WHERE t.id = :id")
     Optional<TicketEntity> get(@Param("id") Integer id);
 

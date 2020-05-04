@@ -1,5 +1,8 @@
 package com.project.JavaEE.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.JavaEE.entities.type.Case;
 import com.project.JavaEE.entities.type.Priority;
 import com.project.JavaEE.entities.type.State;
@@ -14,6 +17,7 @@ import java.util.Set;
 @Table(name = "tickets")
 @RequiredArgsConstructor
 @Data
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "comments"})
 public class TicketEntity {
 
     @Id
@@ -24,6 +28,7 @@ public class TicketEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "ticket")
     private Set<CommentEntity> comments;
 

@@ -2,36 +2,23 @@ package com.project.JavaEE.controllers;
 
 import com.project.JavaEE.dto.FilterDto;
 import com.project.JavaEE.dto.TicketDto;
-import com.project.JavaEE.entities.CommentEntity;
 import com.project.JavaEE.entities.TicketEntity;
-import com.project.JavaEE.entities.UserDetails;
-import com.project.JavaEE.services.CommentService;
 import com.project.JavaEE.services.TicketService;
-import com.project.JavaEE.services.UserService;
-import javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @PreAuthorize("isFullyAuthenticated()")
 public class TicketController {
 
     private final TicketService ticketService;
-    private final UserService userService;
-    private final CommentService commentService;
 
-    public TicketController(TicketService ticketService,
-                            UserService userService,
-                            CommentService commentService) {
+    public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
-        this.userService = userService;
-        this.commentService = commentService;
     }
 
     @ResponseBody
@@ -66,16 +53,16 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.filter(filterDto.getProperty(), filterDto.getQuery()));
     }
 
-    @GetMapping(value = "/{ticketId}/comments")
-    public ResponseEntity<Set<CommentEntity>> getTickets(@PathVariable Integer ticketId) throws NotFoundException {
-        return ResponseEntity.ok(ticketService.getTicketComments(ticketId));
-    }
-
-    @PostMapping(value = "/{ticketId}/comments/{commentId}")
-    public ResponseEntity<Set<CommentEntity>> addComment(@PathVariable Integer ticketId,
-                                                         @PathVariable Integer commentId) {
-        final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        TicketEntity ticketEntity = ticketService.addComment(commentId, userDetails.getUsername(), ticketId);
-        return ResponseEntity.ok(ticketEntity.getComments());
-    }
+//    @GetMapping(value = "/{ticketId}/comments")
+//    public ResponseEntity<Set<CommentEntity>> getTickets(@PathVariable Integer ticketId) throws NotFoundException {
+//        return ResponseEntity.ok(ticketService.getTicketComments(ticketId));
+//    }
+//
+//    @PostMapping(value = "/{ticketId}/comments/{commentId}")
+//    public ResponseEntity<Set<CommentEntity>> addComment(@PathVariable Integer ticketId,
+//                                                         @PathVariable Integer commentId) {
+//        final UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        TicketEntity ticketEntity = ticketService.addComment(commentId, userDetails.getUsername(), ticketId);
+//        return ResponseEntity.ok(ticketEntity.getComments());
+//    }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
@@ -15,5 +16,11 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
             "LEFT JOIN FETCH comment.author " +
             "WHERE comment.id = :id")
     Optional<CommentEntity> get(@Param("id") Integer id);
+
+    @Query("SELECT comment " +
+            "FROM CommentEntity comment " +
+            "LEFT JOIN FETCH comment.author " +
+            "WHERE comment.ticket.id = :ticketId")
+    List<CommentEntity> findAllByTicketId(Integer ticketId);
 
 }

@@ -39,12 +39,6 @@ public class TicketDto {
     @NotEmpty(message = "Creation date cannot be empty")
     private Date creationDate;
 
-    private Date etaDate;
-
-    private Date nextStepDate;
-
-    private String nextStepNote;
-
     @NotEmpty(message = "Firm cannot be empty")
     private String firm;
 

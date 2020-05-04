@@ -101,3 +101,6 @@ values ('My CSS is broken!',
         '2020-05-01',
         'bruh',
         'Invasystems');
+
+insert into comments (ticket, author, body_text, creation_date)
+values (1, 3, 'Yeah I think they are dumb as hell', '2020-05-01')
