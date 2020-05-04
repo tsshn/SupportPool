@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,6 +60,12 @@ public class UserService {
         final UserEntity user = userRepository.get(username)
                 .orElseThrow(() -> new UsernameNotFoundException("The user with login \"" + username + "\" was not found"));
         return user.getLogin();
+    }
+
+    @Transactional
+    public UserEntity getByUsername(final String username) {
+        Optional<UserEntity> user = userRepository.get(username);
+        return user.orElse(null);
     }
 
 }

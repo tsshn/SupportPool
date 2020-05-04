@@ -25,7 +25,7 @@ create table if not exists comments
     author        int          not null,
     foreign key (author) references users (id),
     body_text     varchar(300) not null,
-    creation_date date         not null
+    creation_date datetime         not null
 );
 
 create table if not exists permissions
